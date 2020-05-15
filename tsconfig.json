@@ -11,10 +11,23 @@
     "moduleResolution": "node",
     "importHelpers": true,
     "target": "es2015",
+    "strict": true,
     "lib": [
       "es2018",
       "dom"
-    ]
+    ],
+    "paths": {
+      "@sirius": [
+        "projects/ng-sirius/index.ts"
+      ],
+      "@sirius/*": [
+        "projects/ng-sirius/*"
+      ],
+      "ng-sirius-demo": [
+        "dist/ng-sirius-demo/ng-sirius-demo",
+        "dist/ng-sirius-demo"
+      ]
+    }
   },
   "angularCompilerOptions": {
     "fullTemplateTypeCheck": true,
