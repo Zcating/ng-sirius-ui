@@ -1,6 +1,5 @@
 import { Component } from '@angular/core';
-import { BehaviorSubject } from 'rxjs';
-import { ISirSkuData } from '@sirius/src';
+import { ISirSkuData } from 'ng-sirius';
 
 @Component({
     selector: 'sir-root',
@@ -10,7 +9,7 @@ import { ISirSkuData } from '@sirius/src';
 export class AppComponent {
 
     visible = false;
-    
+
 
     sku: ISirSkuData = {
         specifications: [{
@@ -30,7 +29,7 @@ export class AppComponent {
                 imgUrl: 'https://img.yzcdn.cn/upload_files/2017/02/21/FjKTOxjVgnUuPmHJRdunvYky9OHP.jpg!100x100.jpg',
                 previewImgUrl: 'https://img.yzcdn.cn/upload_files/2017/02/21/FjKTOxjVgnUuPmHJRdunvYky9OHP.jpg!100x100.jpg'
             }],
-            specKey: 'specId_1'
+            specKey: 'specId_2'
         }],
         combinations: [{
             id: 10,
@@ -39,6 +38,13 @@ export class AppComponent {
             specId_2: '2002',
             specId_3: '2003',
             stockCount: 100
+        }, {
+            id: 11,
+            price: 1001,
+            specId_1: '2001',
+            specId_2: '2002',
+            specId_3: '2003',
+            stockCount: 99
         }],
 
         price: '100',

@@ -1,7 +1,9 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { SirSkuComponent } from './sir-sku.component';
 import { OverlayModule } from '@angular/cdk/overlay';
+
+import { SirSkuComponent } from './sir-sku.component';
+import { SirDrawerModule } from 'ng-sirius/drawer/drawer.module';
 
 
 
@@ -11,7 +13,8 @@ import { OverlayModule } from '@angular/cdk/overlay';
   ],
   imports: [
     CommonModule,
-    OverlayModule
+    OverlayModule,
+    SirDrawerModule
   ],
   exports: [
     SirSkuComponent

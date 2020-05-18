@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, Output, EventEmitter, ViewChild, TemplateRef, ViewContainerRef, OnDestroy } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter, ViewChild, TemplateRef, ViewContainerRef, OnDestroy, OnChanges } from '@angular/core';
 import { ChangeDetectionStrategy } from '@angular/core';
 import { Overlay, OverlayRef } from '@angular/cdk/overlay';
 import { TemplatePortal } from '@angular/cdk/portal';
@@ -12,7 +12,11 @@ import {
     ISirSkuData,
     ISirSkuProperty,
     ISirSkuReturnData,
-    ISirSkuInitialSkuData
+    ISirSkuInitialSkuData,
+    ISirSkuSpecification,
+    ISirSkuSpecificationValue,
+    ISirSkuGoods,
+    ISirSkuCombination
 } from './sir-sku.model';
 
 @Component({
@@ -21,13 +25,13 @@ import {
     styleUrls: ['./sir-sku.component.scss'],
     changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class SirSkuComponent implements OnInit, OnDestroy {
+export class SirSkuComponent implements OnInit, OnDestroy, OnChanges {
 
     @Input() visible: boolean = false;
 
     @Input() sku?: ISirSkuData;
 
-    @Input() goods?: {};
+    @Input() goods?: ISirSkuGoods;
 
     @Input() goodsId: number | string = 0;
 
@@ -87,6 +91,11 @@ export class SirSkuComponent implements OnInit, OnDestroy {
     @ViewChild('templateRef') templateRef?: TemplateRef<void>;
 
 
+    currentSpecificationValue?: ISirSkuSpecificationValue;
+    currentCombination?: ISirSkuCombination;
+
+    currentPrice: number = 0;
+
     private overlayRef?: OverlayRef;
 
     private destroy$ = new Subject<void>();
@@ -94,28 +103,24 @@ export class SirSkuComponent implements OnInit, OnDestroy {
     constructor(private overlay: Overlay, private viewContainerRef: ViewContainerRef) { }
 
     ngOnInit(): void {
-        if (this.templateRef) {
-            this.overlayRef = this.overlay.create({hasBackdrop: true});
-            this.overlayRef.attach(new TemplatePortal(this.templateRef, this.viewContainerRef));
-
-            this.overlayRef.backdropClick().pipe(takeUntil(this.destroy$)).subscribe(() => {
-                this.updateVisible(false);
-            });
-        }
+        this.currentSpecificationValue = this.sku?.specifications[0].values[0];
+        this.currentCombination = this.sku?.combinations[0];
     }
-    
+
     ngOnDestroy() {
         this.destroy$.next();
         this.destroy$.complete();
         this.overlayRef?.dispose();
     }
 
+    ngOnChanges() {
+    }
+
     open() {
     }
 
-    updateVisible(value: boolean) {
-        this.visible = value;
-        this.visibleChange.emit(value);
+    close() {
+        this.visible = false;
+        this.visibleChange.emit(false);
     }
-
 }

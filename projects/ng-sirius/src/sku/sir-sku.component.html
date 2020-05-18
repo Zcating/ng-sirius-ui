@@ -1,5 +1,15 @@
-<ng-template #templateRef>
-    <div *ngIf="visible">
-        hello world.
+<sir-drawer [visible]="visible" (sirOnClose)="close()" [placement]="'bottom'" [height]="'80vh'">
+    <div>
+        <img [src]="currentSpecificationValue?.imgUrl">
+        <div>
+            <div>
+                <span>{{ priceTag }}</span>
+                <span>{{ currentCombination?.price }}</span>
+            </div>
+            <div>{{currentCombination?.stockCount}}</div>
+            <div></div>
+        </div>
     </div>
-</ng-template>
+
+    <div></div>
+</sir-drawer>

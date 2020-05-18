@@ -4,7 +4,7 @@ import { NgModule } from '@angular/core';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 
-import { NgSiriusModule } from '../../../ng-sirius/src';
+import { NgSiriusModule } from 'ng-sirius';
 
 @NgModule({
   declarations: [

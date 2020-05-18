@@ -17,11 +17,11 @@
       "dom"
     ],
     "paths": {
-      "@sirius": [
-        "projects/ng-sirius/index.ts"
+      "ng-sirius": [
+        "projects/ng-sirius/src/index.ts"
       ],
-      "@sirius/*": [
-        "projects/ng-sirius/*"
+      "ng-sirius/*": [
+        "projects/ng-sirius/src/*"
       ],
       "ng-sirius-demo": [
         "dist/ng-sirius-demo/ng-sirius-demo",
