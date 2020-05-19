@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { ISirSkuData } from 'ng-sirius';
+import { ISirSkuData, ISirSkuProperty } from 'ng-sirius';
 
 @Component({
     selector: 'sir-root',
@@ -12,22 +12,31 @@ export class AppComponent {
 
 
     sku: ISirSkuData = {
-        specifications: [{
+        specificationCategories: [{
             key: 'color',
             values: [{
                 id: '1001',
                 name: 'red',
                 imgUrl: 'https://img.yzcdn.cn/upload_files/2017/02/21/FjKTOxjVgnUuPmHJRdunvYky9OHP.jpg!100x100.jpg',
                 previewImgUrl: 'https://img.yzcdn.cn/upload_files/2017/02/21/FjKTOxjVgnUuPmHJRdunvYky9OHP.jpg!100x100.jpg'
-            }],
-            specKey: 'specId_1'
-        }, {
-            key: 'color',
-            values: [{
+            }, {
                 id: '1002',
                 name: 'blue',
                 imgUrl: 'https://img.yzcdn.cn/upload_files/2017/02/21/FjKTOxjVgnUuPmHJRdunvYky9OHP.jpg!100x100.jpg',
                 previewImgUrl: 'https://img.yzcdn.cn/upload_files/2017/02/21/FjKTOxjVgnUuPmHJRdunvYky9OHP.jpg!100x100.jpg'
+            }],
+            specKey: 'specId_1'
+        }, {
+            key: 'size',
+            values: [{
+                id: '2001',
+                name: 'super-large'
+            }, {
+                id: '2002',
+                name: 'large'
+            }, {
+                id: '2003',
+                name: 'mid'
             }],
             specKey: 'specId_2'
         }],
@@ -59,6 +68,21 @@ export class AppComponent {
 
         hide_stock: false
     };
+
+    properties: ISirSkuProperty[] = [{
+        id: 123,
+        name: '加料',
+        isMultiple: true,
+        contents: [{
+            id: '1111',
+            name: '珍珠',
+            price: 1
+        }, {
+            id: '1111',
+            name: '爆浆芝士',
+            price: 2
+        }]
+    }];
 
     clicked() {
         this.visible = !this.visible;

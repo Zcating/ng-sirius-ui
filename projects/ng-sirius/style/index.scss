@@ -1,6 +1,9 @@
 $text-color: black;
+
+
 $font-size-base: 14px;
-$font-size-lg: $font-size-base+2px;
+$font-size-lg: $font-size-base + 2px;
+$font-size-sm: $font-size-base - 2px;
 
 $border-radius-base: 5px;
 $border-width-base: 1px;
@@ -12,7 +15,6 @@ $padding-lg: 16px;
 $animation-duration-slow: 0.3s;
 $ease-base-out: cubic-bezier(0.7, 0.3, 0.1, 1);
 
-$drawer-prefix-cls: sir-drawer;
 $shadow-1-up: 0 -6px 16px -8px rgba(0, 0, 0, 0.08),
 0 -9px 28px 0 rgba(0, 0, 0, 0.05),
 0 -12px 48px 16px rgba(0, 0, 0, 0.03);
@@ -63,4 +65,8 @@ $zindex-modal: 1000;
     position: absolute;
     pointer-events: auto;
     z-index: 1000; // Give an opportunity to the content own to manage their z-index such as Modal
+}
+
+body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Helvetica Neue', Helvetica, Segoe UI, Arial, Roboto, 'PingFang SC', 'Hiragino Sans GB', 'Microsoft Yahei', sans-serif;
 }

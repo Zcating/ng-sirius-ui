@@ -1,19 +1,18 @@
 import { Observable } from 'rxjs';
 
+// stock keeping unit data
 export interface ISirSkuData {
-    specifications: ISirSkuSpecification[];
+    // 
+    specificationCategories: ISirSkuSpecificationCategory[];
+    // 
     combinations: ISirSkuCombination[];
 
-    // 默认价格（单位元）
     price: string;
 
-    // 商品总库存
     stockCount: number;
 
-    // 无规格商品 skuId 取 collection_id，否则取所选 sku 组合对应的 id
     collectionId: number;
 
-    // 是否无规格商品
     noneSku: boolean;
 
     messages: (ISirSkuDateMessage | ISirSkuTextMessage | ISirSkuMessage)[];
@@ -21,29 +20,25 @@ export interface ISirSkuData {
     hide_stock: boolean;
 }
 
-export interface ISirSkuSpecification {
+export interface ISirSkuSpecificationCategory {
     key: string;
-    values: ISirSkuSpecificationValue[];
+    values: ISirSkuSpecification[];
     specKey: 'specId_1' | 'specId_2' | 'specId_3';
 }
 
-export interface ISirSkuSpecificationValue {
+export interface ISirSkuSpecification {
     id: string;
     name: string;
-    imgUrl: string;
-    previewImgUrl: string;
+    imgUrl?: string;
+    previewImgUrl?: string;
 }
 
 export interface ISirSkuCombination {
-    // skuId，下单时后端需要
     id: number;
-    // 价格（单位分）
     price: number;
-    // 最多包含3个规格值，为0表示不存在该规格
     specId_1: string;
     specId_2: string;
     specId_3: string;
-    // 当前 sku 组合对应的库存
     stockCount: number;
 }
 
@@ -150,7 +145,7 @@ export interface ISirSkuReturnData {
     cartMessages: { [key in string]: string },
 
     // 选择的商品数量
-    selectedCount: number,
+    selectedCount?: number,
 
     // 选择的 sku 组合
     selectedSkuComb: {

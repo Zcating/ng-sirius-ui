@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, Output, EventEmitter, ViewChild, TemplateRef, ViewContainerRef, OnDestroy, OnChanges } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter, ViewContainerRef, OnDestroy, OnChanges, SimpleChanges } from '@angular/core';
 import { ChangeDetectionStrategy } from '@angular/core';
 import { Overlay, OverlayRef } from '@angular/cdk/overlay';
 import { TemplatePortal } from '@angular/cdk/portal';
@@ -13,10 +13,11 @@ import {
     ISirSkuProperty,
     ISirSkuReturnData,
     ISirSkuInitialSkuData,
+    ISirSkuSpecificationCategory,
     ISirSkuSpecification,
-    ISirSkuSpecificationValue,
     ISirSkuGoods,
-    ISirSkuCombination
+    ISirSkuCombination,
+    ISirSkuPropertyContent
 } from './sir-sku.model';
 
 @Component({
@@ -87,40 +88,60 @@ export class SirSkuComponent implements OnInit, OnDestroy, OnChanges {
 
     @Output() getSkuData = new EventEmitter<ISirSkuReturnData>();
 
-
-    @ViewChild('templateRef') templateRef?: TemplateRef<void>;
-
-
-    currentSpecificationValue?: ISirSkuSpecificationValue;
+    currentSpecificationValue?: ISirSkuSpecification;
     currentCombination?: ISirSkuCombination;
-
+    currentPropertyIndex: number = 0;
     currentPrice: number = 0;
 
-    private overlayRef?: OverlayRef;
+    skuReturnData?: ISirSkuReturnData;
+    
+    unselectedTags: {type: string, index: number, name: string}[] = [];
+
+    get selectionText(): string {
+        return this.unselectedTags.reduce((prev, current) => `${prev} ${current.name}`, '');
+    }
 
     private destroy$ = new Subject<void>();
 
     constructor(private overlay: Overlay, private viewContainerRef: ViewContainerRef) { }
 
     ngOnInit(): void {
-        this.currentSpecificationValue = this.sku?.specifications[0].values[0];
-        this.currentCombination = this.sku?.combinations[0];
+        this.updateSku();
     }
 
     ngOnDestroy() {
         this.destroy$.next();
         this.destroy$.complete();
-        this.overlayRef?.dispose();
     }
 
-    ngOnChanges() {
+    ngOnChanges(simpleChanges: SimpleChanges) {
+        const {sku} = simpleChanges;
+        if (!sku?.firstChange) {
+            this.updateSku();
+        }
     }
 
-    open() {
+    updateSku() {
+        console.log('fuck');
+        if (!this.sku) {
+            return;
+        }
+        this.currentSpecificationValue = this.sku.specificationCategories[0].values[0];
+        this.currentCombination = this.sku?.combinations[0];
+        this.unselectedTags = [
+            ...this.sku.specificationCategories.map((category, index) => ({type: 'spec', index, name: category.key})), 
+            ...this.properties.map((property, index) => ({type: 'property', index, name: property.name})),
+        ];
     }
 
     close() {
         this.visible = false;
         this.visibleChange.emit(false);
+    }
+
+    select({type, item}: {type: 'property', item: ISirSkuPropertyContent} & {type: 'spec', item: ISirSkuSpecification}) {
+        if (type === 'property') {
+            
+        }
     }
 }
