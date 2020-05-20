@@ -10,6 +10,6 @@ import { SirDrawerModule } from './drawer/drawer.module';
     exports: [
         SirSkuModule,
         SirDrawerModule
-    ]
+    ],
 })
 export class NgSiriusModule { }

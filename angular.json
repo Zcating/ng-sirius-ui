@@ -8,6 +8,11 @@
       "root": "projects/ng-sirius",
       "sourceRoot": "projects/ng-sirius",
       "prefix": "sir",
+      "schematics": {
+        "@schematics/angular:component": {
+          "style": "scss"
+        }
+      },
       "architect": {
         "build": {
           "builder": "@angular-devkit/build-ng-packagr:build",
