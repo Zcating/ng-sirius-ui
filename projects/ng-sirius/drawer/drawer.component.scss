@@ -1,0 +1,213 @@
+@import '../style/themes/index.scss';
+
+
+$drawer-prefix-cls: sir-drawer;
+$drawer-header-padding: 11px $padding-lg;
+$drawer-header-close-size: 56px;
+$drawer-bg: #fff;
+
+.#{$drawer-prefix-cls} {
+    $drawer-header-close-padding: ceil(($drawer-header-close-size - $font-size-lg) / 2);
+
+    position: fixed;
+    z-index: $zindex-modal;
+    width: 0%;
+    height: 100%;
+    transition: transform $animation-duration-slow $ease-base-out,
+        height 0s ease $animation-duration-slow,
+        width 0s ease $animation-duration-slow;
+
+    >* {
+        transition: transform $animation-duration-slow $ease-base-out,
+            box-shadow $animation-duration-slow $ease-base-out;
+    }
+
+    &-mask {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 0;
+        background-color: rgba(0, 0, 0, .45);
+        opacity: 0;
+        transition: opacity $animation-duration-slow linear, height 0s ease $animation-duration-slow;
+    }
+
+    &-header {
+        position: relative;
+        padding: $drawer-header-padding;
+        color: $text-color;
+        background: $drawer-bg;
+        border-bottom: $border-width-base $border-style-base $border-color-split;
+        border-radius: $border-radius-base $border-radius-base 0 0;
+    }
+
+    &-header-no-title {
+        color: $text-color;
+        background: $drawer-bg;
+    }
+
+    &-wrapper-body {
+        display: flex;
+        flex-direction: column;
+        flex-wrap: nowrap;
+        width: 100%;
+        height: 100%;
+    }
+
+    &-body {
+        flex-grow: 1;
+        padding: 24px;
+
+        overflow: auto;
+        font-size: 14px;
+        line-height: 1.5715;
+        word-wrap: break-word;
+        background-color: #fff;
+    }
+
+    &-content-wrapper {
+        position: absolute;
+    }
+
+    &-content {
+        position: relative;
+        width: 100%;
+        height: 100%;
+        z-index: 1;
+        overflow: auto;
+        background-color: $drawer-bg;
+        background-clip: padding-box;
+        border: 0;
+    }
+
+    &-left,
+    &-right {
+        top: 0;
+        width: 0%;
+        height: 100%;
+
+        .#{$drawer-prefix-cls}-content-wrapper {
+            height: 100%;
+        }
+
+        &.#{$drawer-prefix-cls}-open {
+            width: 100%;
+            transition: transform $animation-duration-slow $ease-base-out;
+        }
+
+        &.#{$drawer-prefix-cls}-open.no-mask {
+            width: 0%;
+        }
+    }
+
+    &-left {
+        left: 0;
+
+        .#{$drawer-prefix-cls} {
+            &-content-wrapper {
+                left: 0;
+            }
+        }
+
+        &.#{$drawer-prefix-cls}-open {
+            .#{$drawer-prefix-cls}-content-wrapper {
+                box-shadow: $shadow-1-right;
+            }
+        }
+    }
+
+    &-right {
+        right: 0;
+
+        .#{$drawer-prefix-cls} {
+            &-content-wrapper {
+                right: 0;
+            }
+        }
+
+        &.#{$drawer-prefix-cls}-open {
+            .#{$drawer-prefix-cls}-content-wrapper {
+                box-shadow: $shadow-1-left;
+            }
+
+            // https://github.com/ant-design/ant-design/issues/18607, Avoid edge alignment bug.
+            &.no-mask {
+                right: 1px;
+                transform: translateX(1px);
+            }
+        }
+    }
+
+    &-top,
+    &-bottom {
+        left: 0;
+        width: 100%;
+        height: 0%;
+
+        .#{$drawer-prefix-cls}-content-wrapper {
+            width: 100%;
+        }
+
+        &.#{$drawer-prefix-cls}-open {
+            height: 100%;
+            transition: transform $animation-duration-slow $ease-base-out;
+        }
+
+        &.#{$drawer-prefix-cls}-open.no-mask {
+            height: 0%;
+        }
+    }
+
+    &-top {
+        top: 0;
+
+        &.#{$drawer-prefix-cls}-open {
+            .#{$drawer-prefix-cls}-content-wrapper {
+                box-shadow: $shadow-1-down;
+            }
+        }
+    }
+
+    &-bottom {
+        bottom: 0;
+
+        .#{$drawer-prefix-cls} {
+            &-content-wrapper {
+                bottom: 0;
+            }
+        }
+
+        &.#{$drawer-prefix-cls}-open {
+            .#{$drawer-prefix-cls}-content-wrapper {
+                box-shadow: $shadow-1-up;
+            }
+
+            &.no-mask {
+                bottom: 1px;
+                transform: translateY(1px);
+            }
+        }
+    }
+
+    &.#{$drawer-prefix-cls}-open {
+        .#{$drawer-prefix-cls} {
+            &-mask {
+                height: 100%;
+                opacity: 1;
+                transition: none;
+                animation: siriusDrawerFadeIn $animation-duration-slow $ease-base-out;
+            }
+        }
+    }
+}
+
+@keyframes siriusDrawerFadeIn {
+    0% {
+        opacity: 0;
+    }
+
+    100% {
+        opacity: 1;
+    }
+}

@@ -1,0 +1,56 @@
+@import "../style/themes/index.scss";
+
+$counter-prefix: sir-counter;
+
+@mixin disabled {
+    color: $disabled-color;
+    background-color: $disabled-bg;
+    cursor: not-allowed;
+}
+
+.#{$counter-prefix} {
+    display: flex;
+
+
+    &-input {
+        flex: 1;
+        margin: 0 2px;
+        border-radius: unset;
+    }
+
+    &-plus,
+    &-minus {
+        position: relative;
+        margin: 0;
+        padding: 0;
+        background-color: $counter-btn-color;
+        
+        color: $text-color;
+        vertical-align: middle;
+        border: 0;
+        cursor: pointer;
+    }
+
+    &-btn-disabled {
+        @include disabled();
+    }
+
+    &-plus {
+        flex: 1;
+        border-radius: 0 $border-radius-base $border-radius-base 0;
+
+        &:disabled {
+            @include disabled();
+        }
+    }
+
+    &-minus {
+        flex: 1;
+        border-radius: $border-radius-base 0 0 $border-radius-base;
+
+        &:disabled {
+            @include disabled;
+        }
+    }
+}
+

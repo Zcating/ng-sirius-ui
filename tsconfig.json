@@ -18,10 +18,10 @@
     ],
     "paths": {
       "ng-sirius": [
-        "projects/ng-sirius/src/index.ts"
+        "projects/ng-sirius/index.ts"
       ],
       "ng-sirius/*": [
-        "projects/ng-sirius/src/*"
+        "projects/ng-sirius/*"
       ],
       "ng-sirius-demo": [
         "dist/ng-sirius-demo/ng-sirius-demo",

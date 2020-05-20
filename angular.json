@@ -6,7 +6,7 @@
     "ng-sirius": {
       "projectType": "library",
       "root": "projects/ng-sirius",
-      "sourceRoot": "projects/ng-sirius/src",
+      "sourceRoot": "projects/ng-sirius",
       "prefix": "sir",
       "architect": {
         "build": {
@@ -50,25 +50,26 @@
           "style": "scss"
         }
       },
-      "root": "projects/ng-sirius-demo",
-      "sourceRoot": "projects/ng-sirius-demo/src",
+      "root": "ng-sirius-demo",
+      "sourceRoot": "ng-sirius-demo/src",
       "prefix": "sir",
       "architect": {
         "build": {
           "builder": "@angular-devkit/build-angular:browser",
           "options": {
             "outputPath": "dist/ng-sirius-demo",
-            "index": "projects/ng-sirius-demo/src/index.html",
-            "main": "projects/ng-sirius-demo/src/main.ts",
-            "polyfills": "projects/ng-sirius-demo/src/polyfills.ts",
-            "tsConfig": "projects/ng-sirius-demo/tsconfig.app.json",
+            "index": "ng-sirius-demo/src/index.html",
+            "main": "ng-sirius-demo/src/main.ts",
+            "polyfills": "ng-sirius-demo/src/polyfills.ts",
+            "tsConfig": "ng-sirius-demo/tsconfig.app.json",
             "aot": true,
             "assets": [
-              "projects/ng-sirius-demo/src/favicon.ico",
-              "projects/ng-sirius-demo/src/assets"
+              "ng-sirius-demo/src/favicon.ico",
+              "ng-sirius-demo/src/assets"
             ],
             "styles": [
-              "projects/ng-sirius-demo/src/styles.scss"
+              "ng-sirius-demo/src/styles.scss",
+              "projects/ng-sirius/ng-sirius.style.scss"
             ],
             "scripts": []
           },
@@ -76,8 +77,8 @@
             "production": {
               "fileReplacements": [
                 {
-                  "replace": "projects/ng-sirius-demo/src/environments/environment.ts",
-                  "with": "projects/ng-sirius-demo/src/environments/environment.prod.ts"
+                  "replace": "ng-sirius-demo/src/environments/environment.ts",
+                  "with": "ng-sirius-demo/src/environments/environment.prod.ts"
                 }
               ],
               "optimization": true,
@@ -123,16 +124,17 @@
         "test": {
           "builder": "@angular-devkit/build-angular:karma",
           "options": {
-            "main": "projects/ng-sirius-demo/src/test.ts",
-            "polyfills": "projects/ng-sirius-demo/src/polyfills.ts",
-            "tsConfig": "projects/ng-sirius-demo/tsconfig.spec.json",
-            "karmaConfig": "projects/ng-sirius-demo/karma.conf.js",
+            "main": "ng-sirius-demo/src/test.ts",
+            "polyfills": "ng-sirius-demo/src/polyfills.ts",
+            "tsConfig": "ng-sirius-demo/tsconfig.spec.json",
+            "karmaConfig": "ng-sirius-demo/karma.conf.js",
             "assets": [
-              "projects/ng-sirius-demo/src/favicon.ico",
-              "projects/ng-sirius-demo/src/assets"
+              "ng-sirius-demo/src/favicon.ico",
+              "ng-sirius-demo/src/assets"
             ],
             "styles": [
-              "projects/ng-sirius-demo/src/styles.scss"
+              "ng-sirius-demo/src/styles.scss",
+              "projects/ng-sirius/ng-sirius.style.scss"
             ],
             "scripts": []
           }
@@ -141,9 +143,9 @@
           "builder": "@angular-devkit/build-angular:tslint",
           "options": {
             "tsConfig": [
-              "projects/ng-sirius-demo/tsconfig.app.json",
-              "projects/ng-sirius-demo/tsconfig.spec.json",
-              "projects/ng-sirius-demo/e2e/tsconfig.json"
+              "ng-sirius-demo/tsconfig.app.json",
+              "ng-sirius-demo/tsconfig.spec.json",
+              "ng-sirius-demo/e2e/tsconfig.json"
             ],
             "exclude": [
               "**/node_modules/**"
@@ -153,7 +155,7 @@
         "e2e": {
           "builder": "@angular-devkit/build-angular:protractor",
           "options": {
-            "protractorConfig": "projects/ng-sirius-demo/e2e/protractor.conf.js",
+            "protractorConfig": "ng-sirius-demo/e2e/protractor.conf.js",
             "devServerTarget": "ng-sirius-demo:serve"
           },
           "configurations": {

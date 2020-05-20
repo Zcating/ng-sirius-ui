@@ -1,0 +1,47 @@
+<sir-drawer [visible]="visible" (sirOnClose)="close()" [placement]="'bottom'" [height]="'80vh'">
+    <div class="sir-sku">
+        <header class="sir-sku-header">
+            <div class="sir-sku-header-left">
+                <img [src]="currentSpecificationValue?.imgUrl">
+            </div>
+            <div class="sir-sku-header-right">
+                <div class="sir-sku-price-wrapper">
+                    <span class="sir-sku-price-tag">{{ priceTag }}</span>
+                    <span class="sir-sku-price">{{ currentCombination?.price }}</span>
+                </div>
+                <div class="sir-sku-header-item">剩余 {{currentCombination?.stockCount}} 件</div>
+                <div class="sir-sku-header-item">选择 {{selectionText}}</div>
+            </div>
+        </header>
+        <section class="sir-sku-body">
+            <div class="sir-sku-group">
+
+                <ng-container *ngFor="let category of sku?.specificationCategories">
+                    <sir-sku-row 
+                        [title]="category.key" 
+                        [type]="'spec'" 
+                        [items]="category.values" 
+                        (select)="select($event)"
+                    ></sir-sku-row>
+                </ng-container>
+
+                <ng-container *ngFor="let property of properties;">
+                    <sir-sku-row 
+                        [title]="property.name" 
+                        [type]="'property'" 
+                        [items]="property.contents" 
+                        [isMultiple]="property.isMultiple"
+                        (select)="select($event)"
+                    ></sir-sku-row>
+                </ng-container>
+            </div>
+            <div class="sir-sku-stepper-stock">
+                <div>购买数量</div>
+                <div><sir-counter></sir-counter></div>
+            </div>
+            <!-- <div class="sir-sku-message"></div> -->
+        </section>
+        <footer></footer>
+    </div>
+
+</sir-drawer>

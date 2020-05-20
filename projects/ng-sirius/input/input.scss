@@ -1,0 +1,59 @@
+@import "../style/themes/index.scss";
+
+
+$input: 'sir-input';
+
+@mixin disabled {
+    color: $disabled-color;
+    background-color: $disabled-bg;
+    cursor: not-allowed;
+    opacity: 1;
+}
+
+.#{$input} {
+    position: relative;
+    display: inline-block;
+    width: 100%;
+    min-width: 0;
+    padding: $input-padding-vertical-base $input-padding-vertical-base;
+    color: $input-color;
+    font-size: $font-size-base;
+    line-height: $line-height-base;
+    background-color: $input-bg;
+    background-image: none;
+    border: $border-width-base $border-style-base $border-color-base;
+    border-radius: $border-radius-base;
+    transition: all 0.3s;
+    
+    &:hover {
+        border-color: $input-hover-border-color;
+        border-right-width: $border-width-base !important;
+    }
+
+
+    &:focus, &-focused {
+        border-color: $outline-color;
+        border-right-width: $border-width-base !important;
+        outline: 0;
+        box-shadow: $input-outline-offset $outline-blur-size $outline-width rgba($outline-color, $outline-alpha);
+    }
+
+    &-disabled {
+        @include disabled;
+    }
+
+    &[disabled] {
+        @include disabled;
+    }
+
+
+    &-lg {
+        padding: $input-padding-vertical-lg $input-padding-horizontal-lg;
+        font-size: $font-size-lg;
+    }
+
+    &-sm {
+        padding: $input-padding-vertical-sm $input-padding-horizontal-sm;
+        font-size: $font-size-sm;
+    }
+}
