@@ -1,19 +1,28 @@
-import { Component, OnInit, Input } from '@angular/core';
-import { ChangeDetectionStrategy } from '@angular/compiler/src/core';
+import { Component, OnInit, Input, Output, EventEmitter, ViewEncapsulation, ChangeDetectionStrategy, ChangeDetectorRef} from '@angular/core';
+import { SirClassType } from 'ng-sirius/core/types/klass';
 
 @Component({
 	selector: 'sir-button',
 	templateUrl: './button.component.html',
-	styleUrls: ['./button.component.scss'],
-	changeDetection: ChangeDetectionStrategy.OnPush
+	styleUrls: ['./style/button.scss'],
+	changeDetection: ChangeDetectionStrategy.OnPush,
+	encapsulation: ViewEncapsulation.None
 })
 export class SirButtonComponent implements OnInit {
 
 	@Input() disabled: boolean = false;
-	@Input() style: 'primary' = 'primary';
+	@Input() size: 'large' | 'default' | 'small' = 'default';
+	@Input() style: 'primary' | 'default' | 'dash' = 'primary';
+	@Input() sirClass: SirClassType = '';
+
+	@Output() sirClick = new EventEmitter<Event>();
+
 	constructor() { }
 
 	ngOnInit(): void {
 	}
 
+	sirOnClick(event: Event) {
+		this.sirClick.emit(event);
+	}
 }

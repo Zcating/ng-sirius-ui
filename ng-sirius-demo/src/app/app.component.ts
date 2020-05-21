@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, ChangeDetectorRef, OnChanges, SimpleChanges } from '@angular/core';
 import { ISirSkuData, ISirSkuProperty } from 'projects/ng-sirius';
 
 @Component({
@@ -6,10 +6,9 @@ import { ISirSkuData, ISirSkuProperty } from 'projects/ng-sirius';
     templateUrl: './app.component.html',
     styleUrls: ['./app.component.scss']
 })
-export class AppComponent {
+export class AppComponent implements OnChanges {
 
     visible = false;
-
 
     sku: ISirSkuData = {
         specificationCategories: [{
@@ -84,7 +83,19 @@ export class AppComponent {
         }]
     }];
 
-    clicked() {
+    constructor(private cdr: ChangeDetectorRef) {
+
+    }
+
+    ngOnChanges(changes: SimpleChanges) {
+        console.log('shit', changes);
+        if (changes.visible) {
+            console.log(changes);
+        }
+    }
+
+    onClick() {
+        console.log('count');
         this.visible = !this.visible;
     }
 }

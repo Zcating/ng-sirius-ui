@@ -122,7 +122,6 @@ export class SirSkuComponent implements OnInit, OnDestroy, OnChanges {
     }
 
     updateSku() {
-        console.log('fuck');
         if (!this.sku) {
             return;
         }

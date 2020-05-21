@@ -9,20 +9,23 @@ $bg-color-dark: #c3c3c3;
 $disabled-color: rgba(0, 0, 0, 0.25);
 $disabled-bg: $bg-color;
 
+$height-base: 32px;
+$height-lg: 40px;
+$height-sm: 24px;
 
-$font-size-base: 14px;
-$font-size-lg: $font-size-base + 2px;
-$font-size-sm: $font-size-base - 2px;
+// vertical paddings
+$padding-lg: 24px; // containers
+$padding-md: 16px; // small containers and buttons
+$padding-sm: 12px; // Form controls and items
+$padding-xs: 8px; // small items
+$padding-xss: 4px; // more small
 
-$line-height-base: 1.5;
 
 $border-radius-base: 5px;
 $border-width-base: 1px;
 $border-style-base: solid;
 $border-color-base: rgb(216, 216, 216);
 $border-color-split: rgb(240, 240, 240);
-
-$padding-lg: 16px;
 
 
 $outline-blur-size: 0;
@@ -31,9 +34,22 @@ $outline-color: $primary-color;
 $outline-alpha: .2;
 
 
+$font-size-base: 14px;
+$font-size-lg: $font-size-base + 2px;
+$font-size-sm: $font-size-base - 2px;
+
+$font-weight-base: 500;
+
+$line-height-base: 1.5;
+
+
+
+
+
 $animation-duration-slow: 0.3s;
 
 $ease-base-out: cubic-bezier(0.7, 0.3, 0.1, 1);
+$ease-in-out: cubic-bezier(0.4, 0, 0.6, 1);
 
 $shadow-1-up: 0 -6px 16px -8px rgba(0, 0, 0, 0.08),
 0 -9px 28px 0 rgba(0, 0, 0, 0.05),
@@ -54,10 +70,11 @@ $shadow-2: 0 3px 6px -4px rgba(0, 0, 0, 0.12), 0 6px 16px 0 rgba(0, 0, 0, 0.08),
 $zindex-modal: 1000;
 
 
+// input
 $input-color: $text-color;
 $input-icon-color: $input-color;
-$input-padding-vertical-base: 10px;
-$input-padding-horizontal-base: 10px;
+$input-padding-vertical-base: $padding-md;
+$input-padding-horizontal-base: $padding-md;
 $input-padding-vertical-lg: $input-padding-vertical-base + 4px;
 $input-padding-horizontal-lg: $input-padding-horizontal-base + 4px;
 $input-padding-vertical-sm: $input-padding-vertical-base + 4px;
@@ -67,5 +84,20 @@ $input-bg: $component-bg;
 $input-disabled-bg: $disabled-bg;
 $input-hover-border-color: $primary-fade-color;
 
+// btn
+$btn-height-base: $height-base;
+$btn-height-lg: $height-lg;
+$btn-height-sm: $height-sm;
+$btn-border-radius-base: $border-radius-base;
+$btn-border-radius-lg: $border-radius-base;
+$btn-border-radius-sm: $border-radius-base;
+$btn-border-width: $border-width-base;
+$btn-border-style: $border-style-base;
+$btn-font-weight: $font-weight-base;
+$btn-shadow: $shadow-1-down;
+$btn-padding-horizontal-base: $padding-md;
+$btn-padding-horizontal-lg: $btn-padding-horizontal-base;
+$btn-padding-horizontal-sm: $padding-xs;
 
+// counter
 $counter-btn-color: $bg-color-dark;

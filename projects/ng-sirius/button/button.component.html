@@ -1,9 +1,12 @@
 <button 
-    [disabled]="disabled" 
-    (click)="onClick($event)"
+    class="sir-btn"
+    [ngClass]="sirClass"
+    [class.sir-btn-primary]="style === 'primary'"
+    [class.sir-btn-dash]="style === 'dash'"
+    [class.sir-btn-size-large]="size === 'large'"
+    [class.sir-btn-size-small]="size === 'small'"
+    [disabled]="disabled"
+    (click)="sirOnClick($event)"
 >
-    <!-- -->
-    <span class="sir-button-content" #buttonContent>
-        <ng-content></ng-content>
-    </span>
+    <ng-content></ng-content>
 </button>

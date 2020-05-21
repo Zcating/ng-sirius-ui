@@ -66,7 +66,6 @@ export class SirCounterComponent implements ControlValueAccessor, OnChanges {
     }
 
     increase() {
-        console.log('fuck');
         if (this.value >= this.max) {
             return;
         }

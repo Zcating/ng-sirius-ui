@@ -98,13 +98,12 @@ export class SirDrawerComponent implements OnInit, AfterViewInit, OnChanges, OnD
 
     @Input()
     set visible(value: boolean) {
-        console.log('value', value);
         this.isOpen = value;
     }
-
     get visible(): boolean {
         return this.isOpen;
     }
+
 
     @Output() readonly sirOnClose: EventEmitter<MouseEvent> = new EventEmitter();
     @Output() readonly sirOnViewInit = new EventEmitter<void>();
