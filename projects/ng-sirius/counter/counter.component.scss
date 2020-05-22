@@ -1,4 +1,4 @@
-@import "../style/themes/index.scss";
+@import "../core/style/themes/index.scss";
 
 $counter-prefix: sir-counter;
 
@@ -8,49 +8,26 @@ $counter-prefix: sir-counter;
     cursor: not-allowed;
 }
 
-.#{$counter-prefix} {
+.sir-counter {
     display: flex;
-
-
-    &-input {
-        flex: 1;
-        margin: 0 2px;
-        border-radius: unset;
-    }
-
-    &-plus,
-    &-minus {
-        position: relative;
-        margin: 0;
-        padding: 0;
-        background-color: $counter-btn-color;
-        
-        color: $text-color;
-        vertical-align: middle;
-        border: 0;
-        cursor: pointer;
-    }
-
-    &-btn-disabled {
-        @include disabled();
-    }
-
-    &-plus {
-        flex: 1;
-        border-radius: 0 $border-radius-base $border-radius-base 0;
-
-        &:disabled {
-            @include disabled();
-        }
-    }
-
-    &-minus {
-        flex: 1;
-        border-radius: $border-radius-base 0 0 $border-radius-base;
-
-        &:disabled {
-            @include disabled;
-        }
-    }
+    
 }
 
+.sir-counter-input {
+    margin: 0 2px;
+    border-radius: unset;
+}
+
+.sir-counter-plus,
+.sir-counter-minus {
+    position: relative;
+    margin: 0;
+    padding: 0;
+
+    line-height: 32px;
+    font-size: 20px;
+}
+
+.sir-counter-btn-disabled {
+    @include disabled();
+}
