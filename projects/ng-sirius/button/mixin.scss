@@ -1,0 +1,76 @@
+@import "../core/style/themes/index.scss";
+@import "../core/style/functions.scss";
+@import "../core/style/animation.scss";
+
+
+
+$button-min-width: 64px !default;
+$button-margin: 0 !default;
+$button-line-height: 36px !default;
+$button-border-radius: 4px !default;
+$button-focus-transition: opacity 200ms $swift-ease-in-out-timing-function,
+    background-color 200ms $swift-ease-in-out-timing-function !default;
+
+
+@mixin button-base {
+    position: relative;
+    display: inline-block;
+
+    //Buttons likes.
+    display: inline-block;
+    white-space: nowrap;
+    text-decoration: none;
+    vertical-align: baseline;
+    text-align: center;
+    font-weight: $button-font-weight;
+
+    // Sizing.
+    margin: $button-margin;
+    min-width: $button-min-width;
+    line-height: $button-line-height;
+    padding: $button-padding-base;
+    border-radius: $button-border-radius;
+
+    overflow: visible;
+
+
+    border: $button-border-width $button-border-style rgb(226, 226, 243);
+
+
+    &,
+    &:active,
+    &:focus {
+        outline: 0;
+    }
+
+    &:hover {
+        text-decoration: none;
+        // @include button-color($text-color, #2962ff, #2962ff);
+    }
+
+    &:active {
+        outline: 0;
+        box-shadow: none;
+    }
+
+    &.disabled,
+    &[disabled] {
+        cursor: not-allowed;
+        > * {
+            pointer-events: none;
+        }
+    }
+}
+
+@mixin button-color($color, $background, $border) {
+    color: $color;
+    background-color: $background;
+    border-color: $border;
+}
+
+@mixin button-disabled-color($color, $background, $border) {
+    &.disabled,
+    &[disabled] {
+        @include button-color($color, $background, $border);
+    }
+}
