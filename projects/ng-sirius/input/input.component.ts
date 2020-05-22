@@ -1,11 +1,14 @@
-import { Directive, HostBinding, Input, Renderer2, ElementRef, OnChanges, SimpleChanges } from '@angular/core';
+import { HostBinding, Input, Renderer2, ElementRef, OnChanges, SimpleChanges, Component, ViewEncapsulation } from '@angular/core';
 import { Subject } from 'rxjs';
 
-@Directive({
-    selector: 'input[sirInput]',
-    exportAs: 'sirInput'
+@Component({
+    selector: 'input[sir-input]',
+    exportAs: 'sirInput',
+    template: '',
+    styleUrls: ['./input.scss'],
+    encapsulation: ViewEncapsulation.None
 })
-export class SirInputDirective implements OnChanges {
+export class SirInputComponent implements OnChanges {
     @Input() size: 'default' | 'large' | 'small' = 'default';
     @Input() @HostBinding('class.sir-input-disabled') disabled = false;
 
@@ -20,12 +23,12 @@ export class SirInputDirective implements OnChanges {
 
     disabled$ = new Subject<boolean>();
 
-    constructor(private renderer: Renderer2, elementRef: ElementRef) {
+    constructor(private renderer: Renderer2, public elementRef: ElementRef<HTMLInputElement>) {
         this.renderer.addClass(elementRef.nativeElement, 'sir-input');
     }
 
     ngOnChanges(changes: SimpleChanges) {
-        const {disabled} = changes;
+        const { disabled } = changes;
         if (disabled) {
             this.disabled$.next(this.disabled);
         }

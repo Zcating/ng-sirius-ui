@@ -1,7 +1,5 @@
-@import "../style/themes/index.scss";
+@import "../core/style/themes/index.scss";
 
-
-$input: 'sir-input';
 
 @mixin disabled {
     color: $disabled-color;
@@ -10,12 +8,12 @@ $input: 'sir-input';
     opacity: 1;
 }
 
-.#{$input} {
+.sir-input {
     position: relative;
     display: inline-block;
     width: 100%;
     min-width: 0;
-    padding: $input-padding-vertical-base $input-padding-vertical-base;
+    padding: $input-padding-base;
     color: $input-color;
     font-size: $font-size-base;
     line-height: $line-height-base;
@@ -48,12 +46,12 @@ $input: 'sir-input';
 
 
     &-lg {
-        padding: $input-padding-vertical-lg $input-padding-horizontal-lg;
+        padding: $input-padding-lg;
         font-size: $font-size-lg;
     }
 
     &-sm {
-        padding: $input-padding-vertical-sm $input-padding-horizontal-sm;
+        padding: $input-padding-sm;
         font-size: $font-size-sm;
     }
 }

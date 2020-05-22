@@ -1,16 +1,16 @@
-import { NgModule } from "@angular/core";
-import { SirInputDirective } from './input.directive';
+import { NgModule } from '@angular/core';
+import { SirInputComponent } from './input.component';
 import { CommonModule } from '@angular/common';
 
 @NgModule({
     declarations: [
-        SirInputDirective
+        SirInputComponent
     ],
     imports: [
         CommonModule
     ],
     exports: [
-        SirInputDirective
+        SirInputComponent
     ]
 })
 export class SirInputModule {}
