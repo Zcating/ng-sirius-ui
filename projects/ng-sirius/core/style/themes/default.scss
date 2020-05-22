@@ -73,31 +73,26 @@ $zindex-modal: 1000;
 // input
 $input-color: $text-color;
 $input-icon-color: $input-color;
-$input-padding-vertical-base: $padding-md;
-$input-padding-horizontal-base: $padding-md;
-$input-padding-vertical-lg: $input-padding-vertical-base + 4px;
-$input-padding-horizontal-lg: $input-padding-horizontal-base + 4px;
-$input-padding-vertical-sm: $input-padding-vertical-base + 4px;
-$input-padding-horizontal-sm: $input-padding-horizontal-base + 4px;
+$input-padding-base: 0 $padding-md;
+$input-padding-lg: 0 $padding-md + 4px;
+$input-padding-sm: 0 $padding-md - 4px;
 $input-outline-offset: 0 0;
 $input-bg: $component-bg;
 $input-disabled-bg: $disabled-bg;
 $input-hover-border-color: $primary-fade-color;
 
-// btn
-$btn-height-base: $height-base;
-$btn-height-lg: $height-lg;
-$btn-height-sm: $height-sm;
-$btn-border-radius-base: $border-radius-base;
-$btn-border-radius-lg: $border-radius-base;
-$btn-border-radius-sm: $border-radius-base;
-$btn-border-width: $border-width-base;
-$btn-border-style: $border-style-base;
-$btn-font-weight: $font-weight-base;
-$btn-shadow: $shadow-1-down;
-$btn-padding-horizontal-base: $padding-md;
-$btn-padding-horizontal-lg: $btn-padding-horizontal-base;
-$btn-padding-horizontal-sm: $padding-xs;
+// button
+$button-height-base: $height-base;
+$button-height-lg: $height-lg;
+$button-height-sm: $height-sm;
+$button-border-radius-base: $border-radius-base;
+$button-border-radius-lg: $border-radius-base;
+$button-border-radius-sm: $border-radius-base;
+$button-border-width: $border-width-base;
+$button-border-style: $border-style-base;
+$button-font-weight: $font-weight-base;
+$button-shadow: $shadow-1-down;
+$button-padding-base: 0 $padding-md;
 
 // counter
 $counter-btn-color: $bg-color-dark;
