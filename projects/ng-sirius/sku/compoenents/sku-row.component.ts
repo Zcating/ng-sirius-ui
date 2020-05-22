@@ -1,5 +1,5 @@
 import { Component, Input, Output, EventEmitter } from "@angular/core";
-import { ISirSkuPropertyContent, ISirSkuSpecification } from '../sir-sku.model';
+import { ISirSkuPropertyContent, ISirSkuSpec } from '../sku.model';
 
 
 
@@ -32,13 +32,13 @@ export class SirSkuRowComponent {
     @Input() isMultiple: boolean = false;
     @Input() multipleText: string = '可多选';
     @Input() type: 'property' | 'spec' = 'spec';
-    @Input() items?: ISirSkuPropertyContent & {selected: boolean} [] | ISirSkuSpecification & {selected: boolean}[];
+    @Input() items?: ISirSkuPropertyContent & {selected: boolean} [] | ISirSkuSpec & {selected: boolean}[];
 
-    @Output() select = new EventEmitter<{ type: 'property' | 'spec', item: ISirSkuPropertyContent | ISirSkuSpecification, selected: boolean}>();
+    @Output() select = new EventEmitter<{ type: 'property' | 'spec', item: ISirSkuPropertyContent | ISirSkuSpec, selected: boolean}>();
 
     selectedTags: boolean[] = [];
 
-    clickItem(index: number, type: 'property' | 'spec', item: ISirSkuPropertyContent | ISirSkuSpecification) {
+    clickItem(index: number, type: 'property' | 'spec', item: ISirSkuPropertyContent | ISirSkuSpec) {
         const currentTag = !this.selectedTags[index];
         if (!this.isMultiple) {
             this.selectedTags.fill(false);

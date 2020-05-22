@@ -13,12 +13,12 @@ import {
     ISirSkuProperty,
     ISirSkuReturnData,
     ISirSkuInitialSkuData,
-    ISirSkuSpecificationCategory,
-    ISirSkuSpecification,
+    ISirSkuSpecCategory,
+    ISirSkuSpec,
     ISirSkuGoods,
     ISirSkuCombination,
     ISirSkuPropertyContent
-} from './sir-sku.model';
+} from './sku.model';
 
 @Component({
     selector: 'sir-sku',
@@ -88,7 +88,7 @@ export class SirSkuComponent implements OnInit, OnDestroy, OnChanges {
 
     @Output() getSkuData = new EventEmitter<ISirSkuReturnData>();
 
-    currentSpecificationValue?: ISirSkuSpecification;
+    currentSpecificationValue?: ISirSkuSpec;
     currentCombination?: ISirSkuCombination;
     currentPropertyIndex: number = 0;
     currentPrice: number = 0;
@@ -125,10 +125,10 @@ export class SirSkuComponent implements OnInit, OnDestroy, OnChanges {
         if (!this.sku) {
             return;
         }
-        this.currentSpecificationValue = this.sku.specificationCategories[0].values[0];
+        this.currentSpecificationValue = this.sku.specCategories[0].specs[0];
         this.currentCombination = this.sku?.combinations[0];
         this.unselectedTags = [
-            ...this.sku.specificationCategories.map((category, index) => ({type: 'spec', index, name: category.key})), 
+            ...this.sku.specCategories.map((category, index) => ({type: 'spec', index, name: category.name})), 
             ...this.properties.map((property, index) => ({type: 'property', index, name: property.name})),
         ];
     }
@@ -138,7 +138,7 @@ export class SirSkuComponent implements OnInit, OnDestroy, OnChanges {
         this.visibleChange.emit(false);
     }
 
-    select({type, item}: {type: 'property', item: ISirSkuPropertyContent} & {type: 'spec', item: ISirSkuSpecification}) {
+    select({type, item}: {type: 'property', item: ISirSkuPropertyContent} & {type: 'spec', item: ISirSkuSpec}) {
         if (type === 'property') {
             
         }

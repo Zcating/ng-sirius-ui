@@ -1,3 +1,3 @@
-export * from './sir-sku.module';
-export * from './sir-sku.component';
-export * from './sir-sku.model';
+export * from './sku.module';
+export * from './sku.component';
+export * from './sku.model';

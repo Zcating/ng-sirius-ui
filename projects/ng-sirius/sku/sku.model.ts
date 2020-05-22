@@ -2,9 +2,8 @@ import { Observable } from 'rxjs';
 
 // stock keeping unit data
 export interface ISirSkuData {
-    // 
-    specificationCategories: ISirSkuSpecificationCategory[];
-    // 
+    specCategories: ISirSkuSpecCategory[];
+
     combinations: ISirSkuCombination[];
 
     price: string;
@@ -20,13 +19,12 @@ export interface ISirSkuData {
     hide_stock: boolean;
 }
 
-export interface ISirSkuSpecificationCategory {
-    key: string;
-    values: ISirSkuSpecification[];
-    specKey: 'specId_1' | 'specId_2' | 'specId_3';
+export interface ISirSkuSpecCategory {
+    name: string;
+    specs: ISirSkuSpec[];
 }
 
-export interface ISirSkuSpecification {
+export interface ISirSkuSpec {
     id: string;
     name: string;
     imgUrl?: string;
@@ -34,12 +32,10 @@ export interface ISirSkuSpecification {
 }
 
 export interface ISirSkuCombination {
-    id: number;
+    id: string;
     price: number;
-    specId_1: string;
-    specId_2: string;
-    specId_3: string;
     stockCount: number;
+    specIds: string[];
 }
 
 
@@ -74,16 +70,16 @@ export interface ISirSkuProperty {
 }
 
 export interface ISirSkuPropertyContent {
-    id: string,
-    name: string,
-    price: number,
+    id: string;
+    name: string;
+    price: number;
 }
 
 export interface ISirSkuInitialSkuData {
     specId_1: string;
     specId_2: string;
     specId_3: string;
-    selectedNum: 3,
+    selectedNum: 3;
     selectedProp: { [key in string | number]: number };
 }
 
@@ -123,10 +119,10 @@ export interface ISirSkuMessageConfig {
     uploadImage: () => Observable<string> | Promise<string>;
 
     // 最大上传的图片大小 (MB)
-    uploadMaxSize: number,
+    uploadMaxSize: number;
 
     // placeholder 配置
-    placeholderMap: { [key in string]: string },
+    placeholderMap: { [key in string]: string };
 
     // 初始留言信息
     // 键：留言 name
@@ -139,13 +135,13 @@ export interface ISirSkuReturnData {
     // 商品 id
     goodsId: string;
     // 留言信息
-    messages: { [key in string]: string },
+    messages: { [key in string]: string };
 
     // 另一种格式的留言，key 不同
-    cartMessages: { [key in string]: string },
+    cartMessages: { [key in string]: string };
 
     // 选择的商品数量
-    selectedCount?: number,
+    selectedCount?: number;
 
     // 选择的 sku 组合
     selectedSkuComb: {
@@ -157,5 +153,5 @@ export interface ISirSkuReturnData {
         stockCount: number,
         properties: ISirSkuProperty[],
         propertyPrice: number
-    }
+    };
 }

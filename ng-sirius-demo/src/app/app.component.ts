@@ -11,9 +11,9 @@ export class AppComponent implements OnChanges {
     visible = false;
 
     sku: ISirSkuData = {
-        specificationCategories: [{
-            key: 'color',
-            values: [{
+        specCategories: [{
+            name: 'color',
+            specs: [{
                 id: '1001',
                 name: 'red',
                 imgUrl: 'https://img.yzcdn.cn/upload_files/2017/02/21/FjKTOxjVgnUuPmHJRdunvYky9OHP.jpg!100x100.jpg',
@@ -24,10 +24,9 @@ export class AppComponent implements OnChanges {
                 imgUrl: 'https://img.yzcdn.cn/upload_files/2017/02/21/FjKTOxjVgnUuPmHJRdunvYky9OHP.jpg!100x100.jpg',
                 previewImgUrl: 'https://img.yzcdn.cn/upload_files/2017/02/21/FjKTOxjVgnUuPmHJRdunvYky9OHP.jpg!100x100.jpg'
             }],
-            specKey: 'specId_1'
         }, {
-            key: 'size',
-            values: [{
+            name: 'size',
+            specs: [{
                 id: '2001',
                 name: 'super-large'
             }, {
@@ -37,22 +36,32 @@ export class AppComponent implements OnChanges {
                 id: '2003',
                 name: 'mid'
             }],
-            specKey: 'specId_2'
         }],
         combinations: [{
-            id: 10,
+            id: '1',
             price: 1000,
-            specId_1: '2001',
-            specId_2: '2002',
-            specId_3: '2003',
-            stockCount: 100
+            stockCount: 100,
+            specIds: ['1001', '2001'],
         }, {
-            id: 11,
-            price: 1001,
-            specId_1: '2001',
-            specId_2: '2002',
-            specId_3: '2003',
-            stockCount: 99
+            id: '2',
+            price: 1000,
+            stockCount: 99,
+            specIds: ['1001', '2002']
+        }, {
+            id: '3',
+            price: 1000,
+            stockCount: 99,
+            specIds: ['1002', '2001']
+        }, {
+            id: '4',
+            price: 1000,
+            stockCount: 99,
+            specIds: ['1002', '2002']
+        }, {
+            id: '5',
+            price: 1000,
+            stockCount: 99,
+            specIds: ['1002', '2003']
         }],
 
         price: '100',
