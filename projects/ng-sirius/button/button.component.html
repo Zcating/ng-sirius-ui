@@ -1,12 +1,2 @@
-<button 
-    class="sir-btn"
-    [ngClass]="sirClass"
-    [class.sir-btn-primary]="style === 'primary'"
-    [class.sir-btn-dash]="style === 'dash'"
-    [class.sir-btn-size-large]="size === 'large'"
-    [class.sir-btn-size-small]="size === 'small'"
-    [disabled]="disabled"
-    (click)="sirOnClick($event)"
->
-    <ng-content></ng-content>
-</button>
+<ng-content></ng-content>
+<div class="sir-button-focus-overlay"></div>

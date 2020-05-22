@@ -1,0 +1,59 @@
+@import "../core/style/themes/index.scss";
+@import "./mixin.scss";
+
+$button-ghost-color: $text-color;
+$button-ghost-bg: transparent;
+$button-ghost-border: $border-color-base;
+
+$button-focus-transition: opacity 200ms $swift-ease-in-out-timing-function,
+    background-color 200ms $swift-ease-in-out-timing-function;
+
+.sir-button {
+    @include button-base();
+
+    .sir-button-focus-overlay {
+        opacity: 0;
+    }
+
+    &:hover {
+        .sir-button-focus-overlay {
+            opacity: 0.04;
+        }
+    }
+
+    
+    &[disabled],
+    &:disabled {
+        .sir-button-focus-overlay {
+            opacity: 0;
+        }
+        @include button-color(rgba(0,0,0, .25), #f5f5f5, #d9d9d9);
+    }
+}
+
+.sir-button-focus-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+
+    opacity: 0;
+
+    background-color: #000;
+
+    transition: $button-focus-transition;
+    pointer-events: none;
+    border-radius: inherit;
+}
+
+
+.sir-button-default {
+    @include button-color($text-color, #fff, #e0e0e0);
+    // @include button-disabled-color(rgba(0,0,0, .25), #f5f5f5, #d9d9d9);
+}
+
+.sir-button-primary {
+    @include button-color($text-color, #40c4ff, #40c4ff);
+    // @include button-disabled-color(rgba(0,0,0, .25), #f5f5f5, #d9d9d9);
+}
