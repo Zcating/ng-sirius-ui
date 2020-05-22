@@ -96,6 +96,14 @@
         }
     }
 
+    &.sir-sku-row-item-disabled {
+        color: lightgrey;
+        &::before {
+            background: currentColor;
+            opacity: 0.1;
+        }
+    }
+
     &::before {
         position: absolute;
         top: 0;

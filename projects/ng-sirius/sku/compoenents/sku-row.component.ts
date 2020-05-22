@@ -1,11 +1,11 @@
-import { Component, Input, Output, EventEmitter } from "@angular/core";
+import { Component, Input, Output, EventEmitter, OnInit } from '@angular/core';
 import { ISirSkuPropertyContent, ISirSkuSpec } from '../sku.model';
 
 
 
 @Component({
     selector: 'sir-sku-row',
-    styleUrls: ['../sir-sku.component.scss'],
+    styleUrls: ['../sku.component.scss'],
     template: `
         <div class="sir-sku-row">
             <header class="sir-sku-row-title">
@@ -13,9 +13,10 @@ import { ISirSkuPropertyContent, ISirSkuSpec } from '../sku.model';
             </header>
             <section class="sir-sku-row-items">
                 <ng-container *ngFor="let item of items; let i = index">
-                    <div 
+                    <div
                         class="sir-sku-row-item"
-                        [class.sir-sku-row-item-selected]="selectedTags[i]"
+                        [class.sir-sku-row-item-selected]="item.selected"
+                        [class.sir-sku-row-item-disabled]="item.unselectable"
                         (click)="clickItem(i, type, item)"
                     >
                         <img class="sir-sku-row-item-img" *ngIf="item.previewImgUrl" [src]="item.previewImgUrl">
@@ -25,26 +26,27 @@ import { ISirSkuPropertyContent, ISirSkuSpec } from '../sku.model';
             </section>
         </div>
     `,
-
 })
-export class SirSkuRowComponent {
+export class SirSkuRowComponent implements OnInit {
     @Input() title: string = '';
     @Input() isMultiple: boolean = false;
     @Input() multipleText: string = '可多选';
     @Input() type: 'property' | 'spec' = 'spec';
-    @Input() items?: ISirSkuPropertyContent & {selected: boolean} [] | ISirSkuSpec & {selected: boolean}[];
-
-    @Output() select = new EventEmitter<{ type: 'property' | 'spec', item: ISirSkuPropertyContent | ISirSkuSpec, selected: boolean}>();
+    @Input() items?: ISirSkuPropertyContent [] | ISirSkuSpec[];
+    
+    @Output() sirOnSelect = new EventEmitter<{ type: 'property' | 'spec', item: ISirSkuPropertyContent | ISirSkuSpec}>();
 
     selectedTags: boolean[] = [];
 
-    clickItem(index: number, type: 'property' | 'spec', item: ISirSkuPropertyContent | ISirSkuSpec) {
-        const currentTag = !this.selectedTags[index];
-        if (!this.isMultiple) {
-            this.selectedTags.fill(false);
-        }
-        this.selectedTags[index] = currentTag;
+    constructor() {
 
-        this.select.emit({ type: type, item: item, selected: this.selectedTags[index]});
+    }
+
+    ngOnInit(): void {
+        
+    }
+
+    clickItem(index: number, type: 'property' | 'spec', item: ISirSkuPropertyContent | ISirSkuSpec) {
+        this.sirOnSelect.emit({ type, item});
     }
 }

@@ -2,26 +2,27 @@ import { Observable } from 'rxjs';
 
 // stock keeping unit data
 export interface ISirSkuData {
-    specCategories: ISirSkuSpecCategory[];
+    readonly specCategories: ISirSkuSpecCategory[];
 
-    combinations: ISirSkuCombination[];
+    readonly combinations: ISirSkuCombination[];
 
-    price: string;
+    readonly price: string;
 
-    stockCount: number;
+    readonly stockCount: number;
 
-    collectionId: number;
+    readonly collectionId: number;
 
-    noneSku: boolean;
+    readonly noneSku: boolean;
 
-    messages: (ISirSkuDateMessage | ISirSkuTextMessage | ISirSkuMessage)[];
+    readonly messages: (ISirSkuDateMessage | ISirSkuTextMessage | ISirSkuMessage)[];
 
-    hide_stock: boolean;
+    readonly hiddenStock: boolean;
 }
 
 export interface ISirSkuSpecCategory {
-    name: string;
-    specs: ISirSkuSpec[];
+    readonly name: string;
+    readonly specs: ISirSkuSpec[];
+    selected?: boolean;
 }
 
 export interface ISirSkuSpec {
@@ -29,6 +30,8 @@ export interface ISirSkuSpec {
     name: string;
     imgUrl?: string;
     previewImgUrl?: string;
+    selected?: boolean;
+    unselectable?: boolean;
 }
 
 export interface ISirSkuCombination {

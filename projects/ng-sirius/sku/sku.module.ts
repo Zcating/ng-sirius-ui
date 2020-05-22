@@ -6,6 +6,7 @@ import { SirSkuComponent } from './sku.component';
 import { SirSkuRowComponent } from './compoenents/sku-row.component';
 import { SirDrawerModule } from 'ng-sirius/drawer/drawer.module';
 import { SirCounterModule } from 'ng-sirius/counter';
+import { SkuService } from './sku.service';
 
 
 
@@ -19,6 +20,9 @@ import { SirCounterModule } from 'ng-sirius/counter';
     OverlayModule,
     SirDrawerModule,
     SirCounterModule,
+  ],
+  providers: [
+    SkuService
   ],
   exports: [
     SirSkuComponent

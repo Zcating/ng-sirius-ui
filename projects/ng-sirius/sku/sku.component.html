@@ -10,18 +10,18 @@
                     <span class="sir-sku-price">{{ currentCombination?.price }}</span>
                 </div>
                 <div class="sir-sku-header-item">剩余 {{currentCombination?.stockCount}} 件</div>
-                <div class="sir-sku-header-item">选择 {{selectionText}}</div>
+                <div class="sir-sku-header-item">{{selectionText$ | async}}</div>
             </div>
         </header>
         <section class="sir-sku-body">
             <div class="sir-sku-group">
 
-                <ng-container *ngFor="let category of sku?.specificationCategories">
+                <ng-container *ngFor="let category of (specCtegories$ | async)">
                     <sir-sku-row 
-                        [title]="category.key" 
+                        [title]="category.name" 
                         [type]="'spec'" 
-                        [items]="category.values" 
-                        (select)="select($event)"
+                        [items]="category.specs"
+                        (sirOnSelect)="select($event)"
                     ></sir-sku-row>
                 </ng-container>
 
@@ -31,7 +31,7 @@
                         [type]="'property'" 
                         [items]="property.contents" 
                         [isMultiple]="property.isMultiple"
-                        (select)="select($event)"
+                        (sirOnSelect)="select($event)"
                     ></sir-sku-row>
                 </ng-container>
             </div>

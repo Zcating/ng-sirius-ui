@@ -1,10 +1,7 @@
-import { Component, OnInit, Input, Output, EventEmitter, ViewContainerRef, OnDestroy, OnChanges, SimpleChanges } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter, OnDestroy, OnChanges, SimpleChanges } from '@angular/core';
 import { ChangeDetectionStrategy } from '@angular/core';
-import { Overlay, OverlayRef } from '@angular/cdk/overlay';
-import { TemplatePortal } from '@angular/cdk/portal';
-
-import { Observable, Subject } from 'rxjs';
-import { takeUntil } from 'rxjs/operators';
+import { Subject } from 'rxjs';
+import { map } from 'rxjs/operators';
 
 import {
     ISirSkuCustomStepperConfig,
@@ -13,17 +10,17 @@ import {
     ISirSkuProperty,
     ISirSkuReturnData,
     ISirSkuInitialSkuData,
-    ISirSkuSpecCategory,
     ISirSkuSpec,
     ISirSkuGoods,
     ISirSkuCombination,
     ISirSkuPropertyContent
 } from './sku.model';
+import { SkuService } from './sku.service';
 
 @Component({
     selector: 'sir-sku',
-    templateUrl: './sir-sku.component.html',
-    styleUrls: ['./sir-sku.component.scss'],
+    templateUrl: './sku.component.html',
+    styleUrls: ['./sku.component.scss'],
     changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class SirSkuComponent implements OnInit, OnDestroy, OnChanges {
@@ -94,16 +91,38 @@ export class SirSkuComponent implements OnInit, OnDestroy, OnChanges {
     currentPrice: number = 0;
 
     skuReturnData?: ISirSkuReturnData;
-    
-    unselectedTags: {type: string, index: number, name: string}[] = [];
 
-    get selectionText(): string {
-        return this.unselectedTags.reduce((prev, current) => `${prev} ${current.name}`, '');
+    get specCtegories$() {
+        return this.skuService.specCtegories$;
     }
+
+    get selectionText$() {
+        return this.skuService.specCtegories$.pipe(
+            map((categories) => {
+                if (!categories) {
+                    return '';
+                }
+                let finishSelected = false;
+                const text = categories.reduce((prev, curr, index) => {
+                    finishSelected = !!curr.selected && finishSelected;
+                    if (!curr.selected) {
+                        return prev + curr.name + (categories.length === index + 1 ? '。' : '，');
+                    } else {
+                        return '';
+                    }
+                }, '请选择');
+                if (finishSelected) {
+
+                }
+                return text;
+            })
+        );
+    }
+
 
     private destroy$ = new Subject<void>();
 
-    constructor(private overlay: Overlay, private viewContainerRef: ViewContainerRef) { }
+    constructor(private skuService: SkuService) { }
 
     ngOnInit(): void {
         this.updateSku();
@@ -115,7 +134,7 @@ export class SirSkuComponent implements OnInit, OnDestroy, OnChanges {
     }
 
     ngOnChanges(simpleChanges: SimpleChanges) {
-        const {sku} = simpleChanges;
+        const { sku } = simpleChanges;
         if (!sku?.firstChange) {
             this.updateSku();
         }
@@ -125,12 +144,9 @@ export class SirSkuComponent implements OnInit, OnDestroy, OnChanges {
         if (!this.sku) {
             return;
         }
+        this.skuService.skuData = this.sku;
         this.currentSpecificationValue = this.sku.specCategories[0].specs[0];
-        this.currentCombination = this.sku?.combinations[0];
-        this.unselectedTags = [
-            ...this.sku.specCategories.map((category, index) => ({type: 'spec', index, name: category.name})), 
-            ...this.properties.map((property, index) => ({type: 'property', index, name: property.name})),
-        ];
+        this.currentCombination = this.sku.combinations[0];
     }
 
     close() {
@@ -138,9 +154,11 @@ export class SirSkuComponent implements OnInit, OnDestroy, OnChanges {
         this.visibleChange.emit(false);
     }
 
-    select({type, item}: {type: 'property', item: ISirSkuPropertyContent} & {type: 'spec', item: ISirSkuSpec}) {
+    select({ type, item }: { type: 'spec', item: ISirSkuSpec } & { type: 'property', item: ISirSkuPropertyContent }) {
         if (type === 'property') {
-            
+            this.skuService.selectProperty();
+        } else {
+            this.skuService.selectSpec(item);
         }
     }
 }
