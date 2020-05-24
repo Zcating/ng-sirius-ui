@@ -1,15 +1,24 @@
 import { Injectable } from '@angular/core';
-import { BehaviorSubject } from 'rxjs';
-import { ISirSkuData, ISirSkuSpec } from './sku.model';
-import { SkuGraph, createGraph, union, intersection } from './sku-graph';
+import { BehaviorSubject, Observable } from 'rxjs';
+import { ISirSkuData, ISirSkuSpec, ISirSkuCombination } from './sku.model';
+import { SkuGraph } from './sku-graph';
 import { map, withLatestFrom } from 'rxjs/operators';
 
+export interface CategorySpecConn {
+    categoryId: string;
+    spec: ISirSkuSpec;
+}
 
+export interface CombInfo {
+    price: number;
+    stockCount: number;
+}
 
 @Injectable()
 export class SkuService {
     private readonly _skuData = new BehaviorSubject<ISirSkuData | null>(null);
     private readonly _optionalSpecs = new BehaviorSubject<(ISirSkuSpec | null)[]>([]);
+    private readonly _selectedSpecs = new BehaviorSubject<CategorySpecConn[]>([]);
     private graph?: SkuGraph<ISirSkuSpec> | null;
 
     skuData$ = this._skuData.asObservable();
@@ -20,10 +29,18 @@ export class SkuService {
     get optionalSpecs() { return this._optionalSpecs.value; }
     set optionalSpecs(value: (ISirSkuSpec | null)[]) { this._optionalSpecs.next(value); }
 
-    specCtegories$ = this.skuData$.pipe(
-        map(data => data?.specCategories),
-        withLatestFrom(this.optionalSpecs$),
-        map(([categories, specs]) => {
+    selectedSpecs$ = this._selectedSpecs.asObservable();
+    get selectedSpecs() { return this._selectedSpecs.value; }
+    set selectedSpecs(value) { this._selectedSpecs.next(value); }
+
+
+    specCtegories$ = this.optionalSpecs$.pipe(
+        withLatestFrom(
+            this.skuData$.pipe(
+                map(data => data?.specCategories)
+            )
+        ),
+        map(([specs, categories]) => {
             if (!categories) {
                 return categories;
             }
@@ -47,6 +64,38 @@ export class SkuService {
         })
     );
 
+    currentCombination$ = this.selectedSpecs$.pipe(
+        withLatestFrom(this.skuData$),
+        map(([specConns, data]) => {
+            console.log('currentComb', data);
+            if (!data) {
+                return;
+            }
+            if (data.specCategories.length === specConns.length) {
+                let combInfo: CombInfo | undefined;
+                for (const comb of data.combinations) {
+                    let flag = false;
+                    for (let i = 0; i < specConns.length; i++) {
+                        const specId = specConns[i].spec.id;
+                        const combSpecId = comb.specIds[i];
+                        flag = specId === combSpecId || flag;
+                    }
+                    if (flag) {
+                        combInfo = {
+                            stockCount: comb.stockCount,
+                            price: comb.price
+                        };
+                    }
+                }
+                return combInfo;
+            } else {
+                return {
+                    stockCount: data.stockCount,
+                    price: data.price
+                } as CombInfo;
+            }
+        })
+    );
 
     constructor() {
         this._skuData.subscribe((value) => {
@@ -55,24 +104,31 @@ export class SkuService {
                 this.optionalSpecs = [];
                 return;
             }
-            this.graph = createGraph(value);
-            console.log(this.graph);
+            this.graph = SkuGraph.create(value);
             this.optionalSpecs = this.graph.queryAllNodeValues();
         });
+
     }
 
 
-    selectSpec(spec: ISirSkuSpec) {
+    selectSpec(categoryId: string, spec: ISirSkuSpec) {
         if (!this.graph || spec.unselectable) {
             return;
         }
         spec.selected = !spec.selected;
+        const predicate = (value: ISirSkuSpec | null) => spec.id === value?.id;
         if (spec.selected) {
-            this.optionalSpecs = union(this.optionalSpecs, this.graph.queryNodeValuesByTag(1, (value) => spec === value));
+            this.optionalSpecs = this.graph.getUnion(this.optionalSpecs, 1, predicate);
+            this.selectedSpecs = [...this.selectedSpecs, { spec, categoryId }];
         } else {
-            this.optionalSpecs = intersection(this.optionalSpecs, this.graph.queryNodeValuesByTag(0, (value) => spec === value));
+            const nagativeSpecs = this.graph.getIntersection(this.optionalSpecs, 0, predicate);
+            const selectedSpecs = this.selectedSpecs.filter((value) => value.spec.id !== spec.id);
+            // addtion infomation
+            this.optionalSpecs = nagativeSpecs.filter((specs) => !selectedSpecs.some((value) => specs?.id === value.spec.id));
+            console.log(this.optionalSpecs);
+            this.selectedSpecs = selectedSpecs;
         }
-        console.log(this.optionalSpecs);
+        console.log(this.graph);
     }
 
     selectProperty() {

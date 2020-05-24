@@ -10,15 +10,6 @@ export class Node<T = SirAny> {
     }
 }
 
-export class Edge<T = SirAny> {
-
-    constructor(
-        public readonly value: T,
-        public previous: number = 0,
-        public next: number = 0
-    ) { }
-}
-
 export class SkuGraph<T = SirAny> {
     constructor(
         private readonly nodes: Node<T>[]
