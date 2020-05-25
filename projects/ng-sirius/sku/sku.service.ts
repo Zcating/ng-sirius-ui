@@ -1,8 +1,9 @@
 import { Injectable } from '@angular/core';
-import { BehaviorSubject, Observable } from 'rxjs';
-import { ISirSkuData, ISirSkuSpec, ISirSkuCombination } from './sku.model';
-import { SkuGraph } from './sku-graph';
+import { BehaviorSubject } from 'rxjs';
 import { map, withLatestFrom } from 'rxjs/operators';
+
+import { ISirSkuData, ISirSkuSpec, ISirSkuPropertyContent } from './sku.model';
+import { SkuGraph } from './sku-data';
 
 export interface CategorySpecConn {
     categoryId: string;
@@ -67,7 +68,6 @@ export class SkuService {
     currentCombination$ = this.selectedSpecs$.pipe(
         withLatestFrom(this.skuData$),
         map(([specConns, data]) => {
-            console.log('currentComb', data);
             if (!data) {
                 return;
             }
@@ -98,7 +98,7 @@ export class SkuService {
     );
 
     constructor() {
-        this._skuData.subscribe((value) => {
+        this.skuData$.subscribe((value) => {
             if (!value) {
                 this.graph = null;
                 this.optionalSpecs = [];
@@ -107,7 +107,6 @@ export class SkuService {
             this.graph = SkuGraph.create(value);
             this.optionalSpecs = this.graph.queryAllNodeValues();
         });
-
     }
 
 
@@ -125,13 +124,11 @@ export class SkuService {
             const selectedSpecs = this.selectedSpecs.filter((value) => value.spec.id !== spec.id);
             // addtion infomation
             this.optionalSpecs = nagativeSpecs.filter((specs) => !selectedSpecs.some((value) => specs?.id === value.spec.id));
-            console.log(this.optionalSpecs);
             this.selectedSpecs = selectedSpecs;
         }
-        console.log(this.graph);
     }
 
-    selectProperty() {
+    selectPropertyContent(content: ISirSkuPropertyContent) {
 
     }
 }

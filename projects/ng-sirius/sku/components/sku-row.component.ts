@@ -1,7 +1,11 @@
 import { Component, Input, Output, EventEmitter, OnInit } from '@angular/core';
 import { ISirSkuPropertyContent, ISirSkuSpec } from '../sku.model';
 
-
+export interface SkuRowEventData {
+    type: 'property' | 'spec';
+    item: ISirSkuPropertyContent | ISirSkuSpec;
+    id: number | string;
+}
 
 @Component({
     selector: 'sir-sku-row',
@@ -28,13 +32,14 @@ import { ISirSkuPropertyContent, ISirSkuSpec } from '../sku.model';
     `,
 })
 export class SirSkuRowComponent implements OnInit {
+    @Input() id: number | string = '';
     @Input() title: string = '';
     @Input() isMultiple: boolean = false;
     @Input() multipleText: string = '可多选';
     @Input() type: 'property' | 'spec' = 'spec';
-    @Input() items?: ISirSkuPropertyContent [] | ISirSkuSpec[];
-    
-    @Output() sirOnSelect = new EventEmitter<{ type: 'property' | 'spec', item: ISirSkuPropertyContent | ISirSkuSpec}>();
+    @Input() items?: ISirSkuPropertyContent[] | ISirSkuSpec[];
+
+    @Output() sirOnSelect = new EventEmitter<SkuRowEventData>();
 
     selectedTags: boolean[] = [];
 
@@ -43,10 +48,10 @@ export class SirSkuRowComponent implements OnInit {
     }
 
     ngOnInit(): void {
-        
+
     }
 
     clickItem(index: number, type: 'property' | 'spec', item: ISirSkuPropertyContent | ISirSkuSpec) {
-        this.sirOnSelect.emit({ type, item});
+        this.sirOnSelect.emit({ type, item, id: this.id });
     }
 }

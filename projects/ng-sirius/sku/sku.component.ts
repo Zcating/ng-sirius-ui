@@ -16,6 +16,7 @@ import {
     ISirSkuPropertyContent
 } from './sku.model';
 import { SkuService } from './sku.service';
+import { SkuRowEventData } from './components/sku-row.component';
 
 @Component({
     selector: 'sir-sku',
@@ -154,11 +155,11 @@ export class SirSkuComponent implements OnInit, OnDestroy, OnChanges {
         this.visibleChange.emit(false);
     }
 
-    select({ type, item }: { type: 'spec', item: ISirSkuSpec } & { type: 'property', item: ISirSkuPropertyContent }) {
+    select({ type, id, item }: SkuRowEventData) {
         if (type === 'property') {
-            this.skuService.selectProperty();
+            this.skuService.selectPropertyContent(item as ISirSkuPropertyContent);
         } else {
-            this.skuService.selectSpec(item);
+            this.skuService.selectSpec(String(id), item as ISirSkuSpec);
         }
     }
 }

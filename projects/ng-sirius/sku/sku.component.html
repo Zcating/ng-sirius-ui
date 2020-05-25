@@ -18,6 +18,7 @@
 
                 <ng-container *ngFor="let category of (specCtegories$ | async)">
                     <sir-sku-row 
+                        [id]="category.id"
                         [title]="category.name" 
                         [type]="'spec'" 
                         [items]="category.specs"
@@ -27,6 +28,7 @@
 
                 <ng-container *ngFor="let property of properties;">
                     <sir-sku-row 
+                        [id]="property.id"
                         [title]="property.name" 
                         [type]="'property'" 
                         [items]="property.contents" 
