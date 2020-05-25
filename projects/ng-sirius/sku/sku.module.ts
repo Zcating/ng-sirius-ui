@@ -7,6 +7,7 @@ import { SirSkuRowComponent } from './components/sku-row.component';
 import { SirDrawerModule } from 'ng-sirius/drawer/drawer.module';
 import { SirCounterModule } from 'ng-sirius/counter';
 import { SkuService } from './sku.service';
+import { SkuDataProvider } from './sku-data.provider';
 
 
 
@@ -22,7 +23,8 @@ import { SkuService } from './sku.service';
     SirCounterModule,
   ],
   providers: [
-    SkuService
+    SkuService,
+    SkuDataProvider
   ],
   exports: [
     SirSkuComponent

@@ -6,7 +6,6 @@ export class Node<T = SirAny> {
     edges: number[] = [];
 
     constructor(public readonly value: T) {
-
     }
 }
 
@@ -43,6 +42,11 @@ export class SkuGraph {
         return new SkuGraph(nodes);
     }
 
+
+    get nodeCount() {
+        return this.nodes.length;
+    }
+
     private constructor(
         private readonly nodes: Node<ISirSkuSpec>[]
     ) { }
@@ -51,7 +55,10 @@ export class SkuGraph {
         return this.nodes.map(node => node.value);
     }
 
-    queryNodeBits(target: ISirSkuSpec): number[] {
+    queryNodeBits(target?: ISirSkuSpec): number[] {
+        if (!target) {
+            return new Array(this.nodeCount).fill(0);
+        }
         const index = this.nodes.findIndex((node) => node.value.id === target.id);
         return this.nodes[index]?.edges;
     }
@@ -63,7 +70,6 @@ export class SkuGraph {
     getIntersection(bits: number[], target: ISirSkuSpec) {
         return this.intersection(bits, this.queryNodeBits(target));
     }
-
 
 
     inverse(arr: number[]) {

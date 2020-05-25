@@ -4,7 +4,6 @@ import { ISirSkuPropertyContent, ISirSkuSpec } from '../sku.model';
 export interface SkuRowEventData {
     type: 'property' | 'spec';
     item: ISirSkuPropertyContent | ISirSkuSpec;
-    id: number | string;
 }
 
 @Component({
@@ -32,7 +31,6 @@ export interface SkuRowEventData {
     `,
 })
 export class SirSkuRowComponent implements OnInit {
-    @Input() id: number | string = '';
     @Input() title: string = '';
     @Input() isMultiple: boolean = false;
     @Input() multipleText: string = '可多选';
@@ -52,6 +50,6 @@ export class SirSkuRowComponent implements OnInit {
     }
 
     clickItem(index: number, type: 'property' | 'spec', item: ISirSkuPropertyContent | ISirSkuSpec) {
-        this.sirOnSelect.emit({ type, item, id: this.id });
+        this.sirOnSelect.emit({ type, item });
     }
 }

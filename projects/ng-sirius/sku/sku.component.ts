@@ -1,7 +1,6 @@
 import { Component, OnInit, Input, Output, EventEmitter, OnDestroy, OnChanges, SimpleChanges } from '@angular/core';
 import { ChangeDetectionStrategy } from '@angular/core';
-import { Subject } from 'rxjs';
-import { map } from 'rxjs/operators';
+import { Subject, BehaviorSubject } from 'rxjs';
 
 import {
     ISirSkuCustomStepperConfig,
@@ -17,6 +16,8 @@ import {
 } from './sku.model';
 import { SkuService } from './sku.service';
 import { SkuRowEventData } from './components/sku-row.component';
+import { ISkuSelectedResult } from './sku-data.provider';
+import { takeUntil } from 'rxjs/operators';
 
 @Component({
     selector: 'sir-sku',
@@ -90,40 +91,48 @@ export class SirSkuComponent implements OnInit, OnDestroy, OnChanges {
     currentCombination?: ISirSkuCombination;
     currentPropertyIndex: number = 0;
     currentPrice: number = 0;
-
+    selectedResult: ISkuSelectedResult = {price: '0', stockCount: 0};
     skuReturnData?: ISirSkuReturnData;
 
     get specCtegories$() {
-        return this.skuService.specCtegories$;
+        return this.skuService.categories$;
+    }
+
+    get quantifier() {
+        return this.sku?.quantifier ?? '件';
     }
 
     get selectionText$() {
-        return this.skuService.specCtegories$.pipe(
-            map((categories) => {
-                if (!categories) {
-                    return '';
-                }
-                let finishSelected = false;
-                const text = categories.reduce((prev, curr, index) => {
-                    finishSelected = !!curr.selected && finishSelected;
-                    if (!curr.selected) {
-                        return prev + curr.name + (categories.length === index + 1 ? '。' : '，');
-                    } else {
-                        return '';
-                    }
-                }, '请选择');
-                if (finishSelected) {
-
-                }
-                return text;
-            })
-        );
+        return new BehaviorSubject('');
     }
+    // get selectionText$() {
+    //     return this.skuService.specCtegories$.pipe(
+    //         map((categories) => {
+    //             if (!categories) {
+    //                 return '';
+    //             }
+    //             let finishSelected = false;
+    //             const text = categories.reduce((prev, curr, index) => {
+    //                 finishSelected = !!curr.selected && finishSelected;
+    //                 if (!curr.selected) {
+    //                     return prev + curr.name + (categories.length === index + 1 ? '。' : '，');
+    //                 } else {
+    //                     return '';
+    //                 }
+    //             }, '请选择');
+    //             if (finishSelected) {
+
+    //             }
+    //             return text;
+    //         })
+    //     );
+    // }
 
 
     private destroy$ = new Subject<void>();
 
-    constructor(private skuService: SkuService) { }
+    constructor(private skuService: SkuService) {
+    }
 
     ngOnInit(): void {
         this.updateSku();
@@ -148,6 +157,12 @@ export class SirSkuComponent implements OnInit, OnDestroy, OnChanges {
         this.skuService.skuData = this.sku;
         this.currentSpecificationValue = this.sku.specCategories[0].specs[0];
         this.currentCombination = this.sku.combinations[0];
+
+        this.skuService.selectedResult$.pipe(
+            takeUntil(this.destroy$)
+        ).subscribe((value) => {
+            this.selectedResult = value;
+        });
     }
 
     close() {
@@ -155,11 +170,11 @@ export class SirSkuComponent implements OnInit, OnDestroy, OnChanges {
         this.visibleChange.emit(false);
     }
 
-    select({ type, id, item }: SkuRowEventData) {
+    select({ type, item }: SkuRowEventData) {
         if (type === 'property') {
             this.skuService.selectPropertyContent(item as ISirSkuPropertyContent);
         } else {
-            this.skuService.selectSpec(String(id), item as ISirSkuSpec);
+            this.skuService.selectSpec(item as ISirSkuSpec);
         }
     }
 }

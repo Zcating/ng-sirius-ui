@@ -7,9 +7,9 @@
             <div class="sir-sku-header-right">
                 <div class="sir-sku-price-wrapper">
                     <span class="sir-sku-price-tag">{{ priceTag }}</span>
-                    <span class="sir-sku-price">{{ currentCombination?.price }}</span>
+                    <span class="sir-sku-price">{{ selectedResult.price }}</span>
                 </div>
-                <div class="sir-sku-header-item">剩余 {{currentCombination?.stockCount}} 件</div>
+                <div class="sir-sku-header-item">剩余 {{ selectedResult.stockCount}} {{quantifier}}</div>
                 <div class="sir-sku-header-item">{{selectionText$ | async}}</div>
             </div>
         </header>
@@ -18,7 +18,6 @@
 
                 <ng-container *ngFor="let category of (specCtegories$ | async)">
                     <sir-sku-row 
-                        [id]="category.id"
                         [title]="category.name" 
                         [type]="'spec'" 
                         [items]="category.specs"
@@ -28,7 +27,6 @@
 
                 <ng-container *ngFor="let property of properties;">
                     <sir-sku-row 
-                        [id]="property.id"
                         [title]="property.name" 
                         [type]="'property'" 
                         [items]="property.contents" 

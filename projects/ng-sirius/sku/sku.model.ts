@@ -17,6 +17,8 @@ export interface ISirSkuData {
     readonly messages: (ISirSkuDateMessage | ISirSkuTextMessage | ISirSkuMessage)[];
 
     readonly hiddenStock: boolean;
+
+    readonly quantifier?: string;
 }
 
 export interface ISirSkuSpecCategory {
@@ -36,7 +38,7 @@ export interface ISirSkuSpec {
 
 export interface ISirSkuCombination {
     id: string;
-    price: number;
+    price: string;
     stockCount: number;
     specIds: string[];
 }
@@ -111,10 +113,10 @@ export interface ISirSkuCustomStepperConfig {
     handleOverLimit: (data: ISirSkuLimitData) => void;
 
     // 步进器变化的回调
-    handleStepperChange: (currentValue: number) => void,
+    handleStepperChange: (currentValue: number) => void;
 
     // 格式化库存
-    stockFormatter: (stockCount: number) => string | number,
+    stockFormatter: (stockCount: number) => string | number;
 }
 
 export interface ISirSkuMessageConfig {
