@@ -10,7 +10,7 @@ export interface CategorySpecConn {
 }
 
 export interface CombInfo {
-    price: number;
+    price: number | string;
     stockCount: number;
 }
 
