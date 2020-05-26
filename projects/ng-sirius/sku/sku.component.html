@@ -2,20 +2,19 @@
     <div class="sir-sku">
         <header class="sir-sku-header">
             <div class="sir-sku-header-left">
-                <img [src]="currentSpecificationValue?.imgUrl">
+                <img [src]="''">
             </div>
             <div class="sir-sku-header-right">
                 <div class="sir-sku-price-wrapper">
                     <span class="sir-sku-price-tag">{{ priceTag }}</span>
-                    <span class="sir-sku-price">{{ selectedResult.price }}</span>
+                    <span class="sir-sku-price">{{ selectedResult?.price }}</span>
                 </div>
-                <div class="sir-sku-header-item">剩余 {{ selectedResult.stockCount}} {{quantifier}}</div>
+                <div class="sir-sku-header-item">剩余 {{ selectedResult?.stockCount}} {{quantifier}}</div>
                 <div class="sir-sku-header-item">{{selectionText$ | async}}</div>
             </div>
         </header>
         <section class="sir-sku-body">
             <div class="sir-sku-group">
-
                 <ng-container *ngFor="let category of (specCtegories$ | async)">
                     <sir-sku-row 
                         [title]="category.name" 
@@ -25,23 +24,25 @@
                     ></sir-sku-row>
                 </ng-container>
 
-                <ng-container *ngFor="let property of properties;">
-                    <sir-sku-row 
-                        [title]="property.name" 
-                        [type]="'property'" 
-                        [items]="property.contents" 
-                        [isMultiple]="property.isMultiple"
-                        (sirOnSelect)="select($event)"
-                    ></sir-sku-row>
-                </ng-container>
+                <!-- <ng-container *ngFor="let category of propCategories;"> -->
+                    <!-- <sir-sku-row  -->
+                        <!-- [title]="category.name"  -->
+                        <!-- [type]="'property'"  -->
+                        <!-- [items]="category.properties"  -->
+                        <!-- [isMultiple]="category.isMultiple" -->
+                        <!-- (sirOnSelect)="select($event)" -->
+                    <!-- ></sir-sku-row> -->
+                <!-- </ng-container> -->
             </div>
             <div class="sir-sku-stock">
-                <div class="sir-sku-stock-title">购买数量</div>
+                <div class="sir-sku-stock-title">{{stepperTitle}}</div>
                 <div class="sir-sku-stock-counter"><sir-counter></sir-counter></div>
             </div>
-            <!-- <div class="sir-sku-message"></div> -->
         </section>
-        <footer></footer>
+        <footer>
+            <button>{{actionLeftText}}</button>
+            <button>{{actionRightText}}</button>
+        </footer>
     </div>
 
 </sir-drawer>

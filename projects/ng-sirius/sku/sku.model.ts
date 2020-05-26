@@ -14,8 +14,6 @@ export interface ISirSkuData {
 
     readonly noneSku: boolean;
 
-    readonly messages: (ISirSkuDateMessage | ISirSkuTextMessage | ISirSkuMessage)[];
-
     readonly hiddenStock: boolean;
 
     readonly quantifier?: string;
@@ -28,13 +26,12 @@ export interface ISirSkuSpecCategory {
 }
 
 export interface ISirSkuSpec {
-    id: string;
-    name: string;
-    imgUrl?: string;
-    previewImgUrl?: string;
-    selected?: boolean;
-    unselectable?: boolean;
+    readonly id: string;
+    readonly name: string;
+    readonly imgUrl?: string;
+    readonly previewImgUrl?: string;
 }
+
 
 export interface ISirSkuCombination {
     id: string;
@@ -59,22 +56,23 @@ export interface ISirSkuDateMessage {
     placeholder: string;
 }
 
+export type Messages = (ISirSkuDateMessage | ISirSkuTextMessage | ISirSkuMessage)[];
+
+
 export interface ISirSkuMessage {
     type: 'id_no' | 'tel' | 'time' | 'email';
     required: boolean;
     placeholder: string;
 }
 
-
-
-export interface ISirSkuProperty {
+export interface ISirSkuPropertyCategory {
     id: number;
     name: string;
     isMultiple: boolean;
-    contents: ISirSkuPropertyContent[];
+    properties: ISirSkuProperty[];
 }
 
-export interface ISirSkuPropertyContent {
+export interface ISirSkuProperty {
     id: string;
     name: string;
     price: number;
@@ -139,24 +137,16 @@ export interface ISirSkuMessageConfig {
 export interface ISirSkuReturnData {
     // 商品 id
     goodsId: string;
-    // 留言信息
-    messages: { [key in string]: string };
-
-    // 另一种格式的留言，key 不同
-    cartMessages: { [key in string]: string };
 
     // 选择的商品数量
-    selectedCount?: number;
+    selectedCount: number;
 
     // 选择的 sku 组合
     selectedSkuComb: {
         id: number,
         price: number,
-        specId_1: string,
-        specId_2: string,
-        specId_3: string,
         stockCount: number,
-        properties: ISirSkuProperty[],
+        categories: ISirSkuPropertyCategory[],
         propertyPrice: number
     };
 }

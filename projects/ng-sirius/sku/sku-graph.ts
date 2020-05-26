@@ -57,30 +57,38 @@ export class SkuGraph {
 
     queryNodeBits(target?: ISirSkuSpec): number[] {
         if (!target) {
-            return new Array(this.nodeCount).fill(0);
+            return new Array(this.nodeCount).fill(1);
         }
         const index = this.nodes.findIndex((node) => node.value.id === target.id);
         return this.nodes[index]?.edges;
     }
 
-    getUnion(bits: number[], target: ISirSkuSpec) {
-        return this.union(bits, this.queryNodeBits(target));
+    getUnion(bits: number[], target: ISirSkuSpec, process?: (value: number[]) => number[]) {
+        let value = this.queryNodeBits(target);
+        if (process) {
+            value = process(value);
+        }
+        return this.union(bits, value);
     }
 
-    getIntersection(bits: number[], target: ISirSkuSpec) {
-        return this.intersection(bits, this.queryNodeBits(target));
+    getIntersection(bits: number[], target: ISirSkuSpec, process?: (value: number[]) => number[]) {
+        let value = this.queryNodeBits(target);
+        if (process) {
+            value = process(value);
+        }
+        return this.intersection(bits, value);
     }
 
 
-    inverse(arr: number[]) {
+    inverse(arr: number[]): number[] {
         return arr.map(value => !value ? 1 : 0);
     }
 
-    union(arr1: number[], arr2: number[]) {
+    intersection(arr1: number[], arr2: number[]) {
         return arr1.map((value, index) => value === arr2[index] ? value : 0);
     }
 
-    intersection(arr1: number[], arr2: number[]) {
+    union(arr1: number[], arr2: number[]) {
         return arr1.map((value, index) => value || arr2[index] || 0);
     }
 }

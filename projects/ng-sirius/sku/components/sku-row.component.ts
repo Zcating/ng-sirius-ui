@@ -1,9 +1,10 @@
 import { Component, Input, Output, EventEmitter, OnInit } from '@angular/core';
-import { ISirSkuPropertyContent, ISirSkuSpec } from '../sku.model';
+import { ISirSkuProperty, ISirSkuSpec } from '../sku.model';
+import { ISkuSpecInfo } from '../sku.service';
 
 export interface SkuRowEventData {
     type: 'property' | 'spec';
-    item: ISirSkuPropertyContent | ISirSkuSpec;
+    item: ISirSkuProperty | ISkuSpecInfo;
 }
 
 @Component({
@@ -19,7 +20,7 @@ export interface SkuRowEventData {
                     <div
                         class="sir-sku-row-item"
                         [class.sir-sku-row-item-selected]="item.selected"
-                        [class.sir-sku-row-item-disabled]="item.unselectable"
+                        [class.sir-sku-row-item-disabled]="!item.selected && item.unselectable"
                         (click)="clickItem(i, type, item)"
                     >
                         <img class="sir-sku-row-item-img" *ngIf="item.previewImgUrl" [src]="item.previewImgUrl">
@@ -35,7 +36,7 @@ export class SirSkuRowComponent implements OnInit {
     @Input() isMultiple: boolean = false;
     @Input() multipleText: string = '可多选';
     @Input() type: 'property' | 'spec' = 'spec';
-    @Input() items?: ISirSkuPropertyContent[] | ISirSkuSpec[];
+    @Input() items?: ISirSkuProperty[] | ISkuSpecInfo[];
 
     @Output() sirOnSelect = new EventEmitter<SkuRowEventData>();
 
@@ -49,7 +50,7 @@ export class SirSkuRowComponent implements OnInit {
 
     }
 
-    clickItem(index: number, type: 'property' | 'spec', item: ISirSkuPropertyContent | ISirSkuSpec) {
+    clickItem(index: number, type: 'property' | 'spec', item: ISirSkuProperty | ISkuSpecInfo) {
         this.sirOnSelect.emit({ type, item });
     }
 }

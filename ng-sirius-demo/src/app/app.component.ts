@@ -1,5 +1,5 @@
 import { Component, ChangeDetectorRef, OnChanges, SimpleChanges } from '@angular/core';
-import { ISirSkuData, ISirSkuProperty } from 'projects/ng-sirius';
+import { ISirSkuData } from 'projects/ng-sirius';
 
 @Component({
     selector: 'sir-root',
@@ -89,25 +89,8 @@ export class AppComponent implements OnChanges {
 
         noneSku: false,
 
-        messages: [],
-
         hiddenStock: false
     };
-
-    properties: ISirSkuProperty[] = [{
-        id: 123,
-        name: '加料',
-        isMultiple: true,
-        contents: [{
-            id: '1111',
-            name: '珍珠',
-            price: 1
-        }, {
-            id: '1111',
-            name: '爆浆芝士',
-            price: 2
-        }]
-    }];
 
     constructor(private cdr: ChangeDetectorRef) {
 

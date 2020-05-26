@@ -6,17 +6,16 @@ import {
     ISirSkuCustomStepperConfig,
     ISirSkuMessageConfig,
     ISirSkuData,
-    ISirSkuProperty,
+    ISirSkuPropertyCategory,
     ISirSkuReturnData,
     ISirSkuInitialSkuData,
     ISirSkuSpec,
     ISirSkuGoods,
     ISirSkuCombination,
-    ISirSkuPropertyContent
+    ISirSkuProperty
 } from './sku.model';
-import { SkuService } from './sku.service';
+import { SkuService, ISkuSelectedResult, ISkuSpecInfo } from './sku.service';
 import { SkuRowEventData } from './components/sku-row.component';
-import { ISkuSelectedResult } from './sku-data.provider';
 import { takeUntil } from 'rxjs/operators';
 
 @Component({
@@ -47,9 +46,9 @@ export class SirSkuComponent implements OnInit, OnDestroy, OnChanges {
 
     @Input() showAddCartButton: boolean = true;
 
-    @Input() buyText: boolean = false;
+    @Input() actionLeftText: string = 'add cart';
 
-    @Input() addCartText: string = 'add cart';
+    @Input() actionRightText: string = 'buy';
 
     @Input() quota: number = 0;
 
@@ -79,19 +78,15 @@ export class SirSkuComponent implements OnInit, OnDestroy, OnChanges {
 
     @Input() startSaleCount: number = 1;
 
-    @Input() properties: ISirSkuProperty[] = [];
-
     @Input() previewOnClickImage: boolean = true;
 
     @Output() visibleChange = new EventEmitter<boolean>();
 
     @Output() getSkuData = new EventEmitter<ISirSkuReturnData>();
 
-    currentSpecificationValue?: ISirSkuSpec;
-    currentCombination?: ISirSkuCombination;
     currentPropertyIndex: number = 0;
     currentPrice: number = 0;
-    selectedResult: ISkuSelectedResult = {price: '0', stockCount: 0};
+    selectedResult: ISkuSelectedResult | null = null;
     skuReturnData?: ISirSkuReturnData;
 
     get specCtegories$() {
@@ -105,29 +100,6 @@ export class SirSkuComponent implements OnInit, OnDestroy, OnChanges {
     get selectionText$() {
         return new BehaviorSubject('');
     }
-    // get selectionText$() {
-    //     return this.skuService.specCtegories$.pipe(
-    //         map((categories) => {
-    //             if (!categories) {
-    //                 return '';
-    //             }
-    //             let finishSelected = false;
-    //             const text = categories.reduce((prev, curr, index) => {
-    //                 finishSelected = !!curr.selected && finishSelected;
-    //                 if (!curr.selected) {
-    //                     return prev + curr.name + (categories.length === index + 1 ? '。' : '，');
-    //                 } else {
-    //                     return '';
-    //                 }
-    //             }, '请选择');
-    //             if (finishSelected) {
-
-    //             }
-    //             return text;
-    //         })
-    //     );
-    // }
-
 
     private destroy$ = new Subject<void>();
 
@@ -155,9 +127,6 @@ export class SirSkuComponent implements OnInit, OnDestroy, OnChanges {
             return;
         }
         this.skuService.skuData = this.sku;
-        this.currentSpecificationValue = this.sku.specCategories[0].specs[0];
-        this.currentCombination = this.sku.combinations[0];
-
         this.skuService.selectedResult$.pipe(
             takeUntil(this.destroy$)
         ).subscribe((value) => {
@@ -171,10 +140,8 @@ export class SirSkuComponent implements OnInit, OnDestroy, OnChanges {
     }
 
     select({ type, item }: SkuRowEventData) {
-        if (type === 'property') {
-            this.skuService.selectPropertyContent(item as ISirSkuPropertyContent);
-        } else {
-            this.skuService.selectSpec(item as ISirSkuSpec);
+        if (type === 'spec') {
+            this.skuService.selectSpec(item as ISkuSpecInfo);
         }
     }
 }
