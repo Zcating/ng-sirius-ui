@@ -1,4 +1,4 @@
-<sir-drawer [visible]="visible" (sirOnClose)="close()" [placement]="'bottom'" [height]="'80vh'">
+<sir-drawer [visible]="visible" (sirOnClose)="close()" [placement]="'bottom'" [height]="'auto'" [bodyStyle]="bodyStyle">
     <div class="sir-sku">
         <header class="sir-sku-header">
             <div class="sir-sku-header-left">
@@ -39,9 +39,9 @@
                 <div class="sir-sku-stock-counter"><sir-counter></sir-counter></div>
             </div>
         </section>
-        <footer>
-            <button>{{actionLeftText}}</button>
-            <button>{{actionRightText}}</button>
+        <footer class="sir-sku-action">
+            <button sir-button class="sir-sku-action-left-button">{{actionLeftText}}</button>
+            <button sir-button class="sir-sku-action-right-button">{{actionRightText}}</button>
         </footer>
     </div>
 

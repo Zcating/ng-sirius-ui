@@ -51,7 +51,7 @@ export const DRAWER_ANIMATE_DURATION = 300;
             >
                 <div class="sir-drawer-content">
                     <div class="sir-drawer-wrapper-body" [style.height]="isLeftOrRight ? '100%' : null">
-                        <div
+                        <!-- <div
                             *ngIf="title || closable"
                             [class.sir-drawer-header]="!!title"
                             [class.sir-drawer-header-no-title]="!title"
@@ -63,7 +63,7 @@ export const DRAWER_ANIMATE_DURATION = 300;
                                 class="sir-drawer-close"
                                 style="--scroll-bar: 0px;"
                             >X</button>
-                        </div>
+                        </div> -->
                         <div class="sir-drawer-body" [ngStyle]="bodyStyle">
                             <ng-content></ng-content>
                         </div>

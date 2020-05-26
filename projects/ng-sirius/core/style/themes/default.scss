@@ -17,7 +17,7 @@ $height-sm: 24px;
 $padding-lg: 24px; // containers
 $padding-md: 16px; // small containers and buttons
 $padding-sm: 12px; // Form controls and items
-$padding-xs: 8px; // small items
+$padding-xs: 8px;  // small items
 $padding-xss: 4px; // more small
 
 $margin-lg: 24px;
@@ -102,3 +102,11 @@ $button-padding-base: 0 $padding-md;
 
 // counter
 $counter-btn-color: $bg-color-dark;
+
+
+// sku
+$sku-action-border-radius: 20px;
+$sku-action-padding: $padding-xs $padding-md;
+$sku-action-button-height: 40px;
+$sku-action-left-button-background: linear-gradient(to right, #ffd01e, #ff8917);
+$sku-action-right-button-background: linear-gradient(to right, #ff6034, #ee0a24);

@@ -84,6 +84,13 @@ export class SirSkuComponent implements OnInit, OnDestroy, OnChanges {
 
     @Output() getSkuData = new EventEmitter<ISirSkuReturnData>();
 
+
+    bodyStyle = {
+        maxHeight: '80vh',
+        minHeight: '50vh',
+        padding: '0 16px'
+    };
+
     currentPropertyIndex: number = 0;
     currentPrice: number = 0;
     selectedResult: ISkuSelectedResult | null = null;
