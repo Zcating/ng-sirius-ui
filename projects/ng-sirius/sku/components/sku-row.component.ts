@@ -1,10 +1,9 @@
 import { Component, Input, Output, EventEmitter, OnInit } from '@angular/core';
-import { ISirSkuProperty, ISirSkuSpec } from '../sku.model';
 import { ISkuSpecInfo } from '../sku.service';
 
 export interface SkuRowEventData {
     type: 'property' | 'spec';
-    item: ISirSkuProperty | ISkuSpecInfo;
+    item: ISkuSpecInfo;
 }
 
 @Component({
@@ -36,7 +35,7 @@ export class SirSkuRowComponent implements OnInit {
     @Input() isMultiple: boolean = false;
     @Input() multipleText: string = '可多选';
     @Input() type: 'property' | 'spec' = 'spec';
-    @Input() items?: ISirSkuProperty[] | ISkuSpecInfo[];
+    @Input() items?: ISkuSpecInfo[];
 
     @Output() sirOnSelect = new EventEmitter<SkuRowEventData>();
 
@@ -50,7 +49,10 @@ export class SirSkuRowComponent implements OnInit {
 
     }
 
-    clickItem(index: number, type: 'property' | 'spec', item: ISirSkuProperty | ISkuSpecInfo) {
+    clickItem(index: number, type: 'property' | 'spec', item: ISkuSpecInfo) {
+        if (!item.selected && item.unselectable) {
+            return;
+        }
         this.sirOnSelect.emit({ type, item });
     }
 }

@@ -5,7 +5,7 @@ import { OverlayModule } from '@angular/cdk/overlay';
 import { SirSkuComponent } from './sku.component';
 import { SirSkuRowComponent } from './components/sku-row.component';
 import { SirDrawerModule } from 'ng-sirius/drawer/drawer.module';
-import { SirCounterModule } from 'ng-sirius/counter';
+import { SirStepperModule } from 'ng-sirius/stepper';
 import { SkuService } from './sku.service';
 
 
@@ -19,7 +19,7 @@ import { SkuService } from './sku.service';
     CommonModule,
     OverlayModule,
     SirDrawerModule,
-    SirCounterModule,
+    SirStepperModule,
   ],
   providers: [
     SkuService

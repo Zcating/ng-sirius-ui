@@ -30,7 +30,7 @@ export class SirSkuComponent implements OnInit, OnDestroy, OnChanges {
 
     @Input() sku?: ISirSkuData;
 
-    @Input() goods?: ISirSkuGoods;
+    // @Input() goods?: ISirSkuGoods;
 
     @Input() goodsId: number | string = 0;
 
@@ -46,9 +46,11 @@ export class SirSkuComponent implements OnInit, OnDestroy, OnChanges {
 
     @Input() showAddCartButton: boolean = true;
 
-    @Input() actionLeftText: string = 'add cart';
+    @Input() actionNormalText: string = 'add cart';
 
-    @Input() actionRightText: string = 'buy';
+    @Input() actionMainText: string = 'buy';
+
+    @Input() singleAction = false;
 
     @Input() quota: number = 0;
 

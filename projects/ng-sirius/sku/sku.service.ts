@@ -24,6 +24,7 @@ export interface ISkuCategoryInfo extends ISirSkuSpecCategory {
 export interface ISkuSelectedResult {
     readonly stockCount: number;
     readonly price: string;
+    readonly picture: string;
 }
 
 @Injectable()
@@ -35,10 +36,10 @@ export class SkuService {
     private readonly specInfos$$ = new BehaviorSubject<ISkuSpecInfo[]>([]);
     private readonly selectedSpecs$$ = new BehaviorSubject<ISkuSpecInfo[]>([]);
     private readonly finishSelected$$ = new BehaviorSubject(false);
-    private readonly graph$$ = new BehaviorSubject<SkuGraph | null>(null);
     private readonly selectedResult$$ = new BehaviorSubject<ISkuSelectedResult | null>(null);
 
     private bits: number[] = [];
+    private graph?: SkuGraph;
 
     public readonly combinations$ = this.combinations$$.asObservable();
     public readonly selectedResult$ = this.selectedResult$$.asObservable();
@@ -53,7 +54,7 @@ export class SkuService {
         const properties = [];
         for (const category of categories) {
             for (const property of category.properties) {
-                properties.push({...property});
+                properties.push({ ...property });
             }
         }
     }
@@ -66,15 +67,15 @@ export class SkuService {
 
             this.initSpecsData(data);
             this.combinations$$.next(data.combinations);
-            this.selectedResult$$.next({ price: data.price, stockCount: data.stockCount });
+            this.selectedResult$$.next({ price: data.price, stockCount: data.stockCount, picture: '' });
         });
     }
 
     selectSpec(specInfo: ISkuSpecInfo) {
-        if (!this.graph$$.value) {
+        if (!this.graph) {
             return;
         }
-        const graph = this.graph$$.value;
+        const graph = this.graph;
 
         specInfo.selected = !specInfo.selected;
         if (specInfo.selected) {
@@ -89,8 +90,12 @@ export class SkuService {
             let bits = graph.inverse(this.bits);
 
             // Rneg & S1 & S2 & ... & S( St which not in S )
-            for (const spec of selectedSpecs) {
-                bits = graph.getIntersection(bits, spec);
+            if (selectedSpecs.length) {
+                for (const spec of selectedSpecs) {
+                    bits = graph.getIntersection(bits, spec);
+                }
+            } else {
+                bits = graph.queryNodeBits();
             }
             this.bits = bits;
         }
@@ -124,8 +129,8 @@ export class SkuService {
         }
         this.categories$$.next(newCategories);
         this.specInfos$$.next(specInfos);
-        this.graph$$.next(SkuGraph.create(specInfos, data.combinations));
-        this.bits = this.graph$$.value!.queryNodeBits();
+        this.graph = SkuGraph.create(specInfos, data.combinations);
+        this.bits = this.graph.queryNodeBits();
     }
 
 
@@ -135,23 +140,28 @@ export class SkuService {
         const combinations = data?.combinations;
         const selectedSpecs = this.selectedSpecs$$.value;
         if (!data || !combinations) {
-            return { stockCount: 0, price: '0' };
+            return { stockCount: 0, price: '0', picture: '' };
         }
+
         if (selectedSpecs.length === combinations.length) {
             let result;
             for (const combination of combinations) {
                 let tag = true;
+                let picture = data.picture;
                 for (const info of infos) {
                     tag = combination.specIds.some(id => info.id === id) && tag;
+                    if (info.imgUrl) {
+                        picture = info.imgUrl;
+                    }
                 }
                 if (tag) {
-                    result = { stockCount: combination.stockCount, price: combination.price };
+                    result = { stockCount: combination.stockCount, price: combination.price, picture };
                 }
             }
-            return result || { stockCount: data.stockCount, price: data.price };
-        } else {
-            return { stockCount: data.stockCount, price: data.price };
+            return result || { stockCount: data.stockCount, price: data.price, picture: data.picture };
         }
+
+        return { stockCount: data.stockCount, price: data.price, picture: data.picture };
     }
 }
 

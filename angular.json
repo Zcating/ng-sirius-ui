@@ -48,32 +48,32 @@
         }
       }
     },
-    "ng-sirius-demo": {
+    "ng-sirius-doc": {
       "projectType": "application",
       "schematics": {
         "@schematics/angular:component": {
           "style": "scss"
         }
       },
-      "root": "ng-sirius-demo",
-      "sourceRoot": "ng-sirius-demo/src",
+      "root": "ng-sirius-doc",
+      "sourceRoot": "projects/ng-sirius-doc/src",
       "prefix": "sir",
       "architect": {
         "build": {
           "builder": "@angular-devkit/build-angular:browser",
           "options": {
-            "outputPath": "dist/ng-sirius-demo",
-            "index": "ng-sirius-demo/src/index.html",
-            "main": "ng-sirius-demo/src/main.ts",
-            "polyfills": "ng-sirius-demo/src/polyfills.ts",
-            "tsConfig": "ng-sirius-demo/tsconfig.app.json",
+            "outputPath": "dist/ng-sirius-doc",
+            "index": "projects/ng-sirius-doc/src/index.html",
+            "main": "projects/ng-sirius-doc/src/main.ts",
+            "polyfills": "projects/ng-sirius-doc/src/polyfills.ts",
+            "tsConfig": "projects/ng-sirius-doc/tsconfig.app.json",
             "aot": true,
             "assets": [
-              "ng-sirius-demo/src/favicon.ico",
-              "ng-sirius-demo/src/assets"
+              "projects/ng-sirius-doc/src/favicon.ico",
+              "projects/ng-sirius-doc/src/assets"
             ],
             "styles": [
-              "ng-sirius-demo/src/styles.scss",
+              "projects/ng-sirius-doc/src/styles.scss",
               "projects/ng-sirius/ng-sirius.style.scss"
             ],
             "scripts": []
@@ -82,8 +82,8 @@
             "production": {
               "fileReplacements": [
                 {
-                  "replace": "ng-sirius-demo/src/environments/environment.ts",
-                  "with": "ng-sirius-demo/src/environments/environment.prod.ts"
+                  "replace": "ng-sirius-doc/src/environments/environment.ts",
+                  "with": "ng-sirius-doc/src/environments/environment.prod.ts"
                 }
               ],
               "optimization": true,
@@ -112,33 +112,33 @@
         "serve": {
           "builder": "@angular-devkit/build-angular:dev-server",
           "options": {
-            "browserTarget": "ng-sirius-demo:build"
+            "browserTarget": "ng-sirius-doc:build"
           },
           "configurations": {
             "production": {
-              "browserTarget": "ng-sirius-demo:build:production"
+              "browserTarget": "ng-sirius-doc:build:production"
             }
           }
         },
         "extract-i18n": {
           "builder": "@angular-devkit/build-angular:extract-i18n",
           "options": {
-            "browserTarget": "ng-sirius-demo:build"
+            "browserTarget": "ng-sirius-doc:build"
           }
         },
         "test": {
           "builder": "@angular-devkit/build-angular:karma",
           "options": {
-            "main": "ng-sirius-demo/src/test.ts",
-            "polyfills": "ng-sirius-demo/src/polyfills.ts",
-            "tsConfig": "ng-sirius-demo/tsconfig.spec.json",
-            "karmaConfig": "ng-sirius-demo/karma.conf.js",
+            "main": "projects/ng-sirius-doc/src/test.ts",
+            "polyfills": "projects/ng-sirius-doc/src/polyfills.ts",
+            "tsConfig": "projects/ng-sirius-doc/tsconfig.spec.json",
+            "karmaConfig": "projects/ng-sirius-doc/karma.conf.js",
             "assets": [
-              "ng-sirius-demo/src/favicon.ico",
-              "ng-sirius-demo/src/assets"
+              "projects/ng-sirius-doc/src/favicon.ico",
+              "projects/ng-sirius-doc/src/assets"
             ],
             "styles": [
-              "ng-sirius-demo/src/styles.scss",
+              "projects/ng-sirius-doc/src/styles.scss",
               "projects/ng-sirius/ng-sirius.style.scss"
             ],
             "scripts": []
@@ -148,9 +148,9 @@
           "builder": "@angular-devkit/build-angular:tslint",
           "options": {
             "tsConfig": [
-              "ng-sirius-demo/tsconfig.app.json",
-              "ng-sirius-demo/tsconfig.spec.json",
-              "ng-sirius-demo/e2e/tsconfig.json"
+              "ng-sirius-doc/tsconfig.app.json",
+              "ng-sirius-doc/tsconfig.spec.json",
+              "ng-sirius-doc/e2e/tsconfig.json"
             ],
             "exclude": [
               "**/node_modules/**"
@@ -160,12 +160,12 @@
         "e2e": {
           "builder": "@angular-devkit/build-angular:protractor",
           "options": {
-            "protractorConfig": "ng-sirius-demo/e2e/protractor.conf.js",
-            "devServerTarget": "ng-sirius-demo:serve"
+            "protractorConfig": "ng-sirius-doc/e2e/protractor.conf.js",
+            "devServerTarget": "ng-sirius-doc:serve"
           },
           "configurations": {
             "production": {
-              "devServerTarget": "ng-sirius-demo:serve:production"
+              "devServerTarget": "ng-sirius-doc:serve:production"
             }
           }
         }
@@ -175,5 +175,5 @@
   "cli": {
     "analytics": false
   },
-  "defaultProject": "ng-sirius-demo"
+  "defaultProject": "ng-sirius-doc"
 }

@@ -23,9 +23,9 @@
       "ng-sirius/*": [
         "projects/ng-sirius/*"
       ],
-      "ng-sirius-demo": [
-        "dist/ng-sirius-demo/ng-sirius-demo",
-        "dist/ng-sirius-demo"
+      "ng-sirius-doc": [
+        "dist/ng-sirius-doc/ng-sirius-doc",
+        "dist/ng-sirius-doc"
       ]
     }
   },

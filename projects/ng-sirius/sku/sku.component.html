@@ -2,14 +2,14 @@
     <div class="sir-sku">
         <header class="sir-sku-header">
             <div class="sir-sku-header-left">
-                <img [src]="''">
+                <img [src]="selectedResult?.picture">
             </div>
             <div class="sir-sku-header-right">
                 <div class="sir-sku-price-wrapper">
                     <span class="sir-sku-price-tag">{{ priceTag }}</span>
                     <span class="sir-sku-price">{{ selectedResult?.price }}</span>
                 </div>
-                <div class="sir-sku-header-item">剩余 {{ selectedResult?.stockCount}} {{quantifier}}</div>
+                <div class="sir-sku-header-item">剩余 {{ selectedResult?.stockCount }} {{ quantifier }}</div>
                 <div class="sir-sku-header-item">{{selectionText$ | async}}</div>
             </div>
         </header>
@@ -36,12 +36,17 @@
             </div>
             <div class="sir-sku-stock">
                 <div class="sir-sku-stock-title">{{stepperTitle}}</div>
-                <div class="sir-sku-stock-counter"><sir-counter></sir-counter></div>
+                <div class="sir-sku-stock-stepper"><sir-stepper></sir-stepper></div>
             </div>
         </section>
         <footer class="sir-sku-action">
-            <button sir-button class="sir-sku-action-left-button">{{actionLeftText}}</button>
-            <button sir-button class="sir-sku-action-right-button">{{actionRightText}}</button>
+            <ng-container *ngIf="singleAction; else multiActionTemplate">
+                <button sir-button class="sir-sku-action-button">{{actionMainText}}</button>
+            </ng-container>
+            <ng-template #multiActionTemplate>
+                <button sir-button class="sir-sku-action-left-button">{{actionNormalText}}</button>
+                <button sir-button class="sir-sku-action-right-button">{{actionMainText}}</button>    
+            </ng-template>
         </footer>
     </div>
 

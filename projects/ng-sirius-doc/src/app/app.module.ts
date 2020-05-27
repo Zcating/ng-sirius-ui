@@ -8,7 +8,7 @@ import { NgSiriusModule } from 'projects/ng-sirius';
 
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
   ],
   imports: [
     BrowserModule,

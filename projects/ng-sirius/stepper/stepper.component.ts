@@ -12,19 +12,19 @@ function toNumber(obj: SirAny, tmp: number = NaN) {
 }
 
 @Component({
-    selector: 'sir-counter',
-    styleUrls: ['./counter.component.scss'],
+    selector: 'sir-stepper',
+    styleUrls: ['./stepper.component.scss'],
     providers: [{
         provide: NG_VALUE_ACCESSOR,
-        useExisting: forwardRef(() => SirCounterComponent),
+        useExisting: forwardRef(() => SirStepperComponent),
         multi: true
     }],
     changeDetection: ChangeDetectionStrategy.OnPush,
     template: `
-        <div class="sir-counter" [style.height]="cssHeight">
+        <div class="sir-stepper" [style.height]="cssHeight">
             <button
                 sir-button
-                class="sir-counter-minus"
+                class="sir-stepper-minus"
                 [style.height]="cssHeight"
                 [style.width]="cssHeight"
                 [style.min-width]="cssHeight"
@@ -34,7 +34,7 @@ function toNumber(obj: SirAny, tmp: number = NaN) {
                 <input
                     #inputComponent
                     sir-input
-                    class="sir-counter-input"
+                    class="sir-stepper-input"
                     [attr.min]="sirMin"
                     [attr.max]="sirMax"
                     [ngModel]="value"
@@ -42,7 +42,7 @@ function toNumber(obj: SirAny, tmp: number = NaN) {
                 />
             <button
                 sir-button
-                class="sir-counter-plus"
+                class="sir-stepper-plus"
                 [style.height]="cssHeight"
                 [style.width]="cssHeight"
                 [style.min-width]="cssHeight"
@@ -52,7 +52,7 @@ function toNumber(obj: SirAny, tmp: number = NaN) {
         </div>
     `,
 })
-export class SirCounterComponent implements ControlValueAccessor, OnChanges {
+export class SirStepperComponent implements ControlValueAccessor, OnChanges {
 
     @Input() sirMax: number = 10;
     @Input() sirMin: number = 0;
@@ -97,7 +97,7 @@ export class SirCounterComponent implements ControlValueAccessor, OnChanges {
         if (this.value >= this.sirMax) {
             return;
         }
-        this.value += 1;
+        this.value += this.sirStep;
         this.onChange?.call(null, this.value);
     }
 
@@ -105,7 +105,7 @@ export class SirCounterComponent implements ControlValueAccessor, OnChanges {
         if (this.value <= this.sirMin) {
             return;
         }
-        this.value -= 1;
+        this.value -= this.sirStep;
         this.onChange?.call(null, this.value);
     }
 

@@ -1,12 +1,12 @@
-import { NgModule } from "@angular/core";
-import { FormsModule, ReactiveFormsModule } from "@angular/forms";
+import { NgModule } from '@angular/core';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
-import { SirCounterComponent } from './counter.component';
+import { SirStepperComponent } from './stepper.component';
 import { SirInputModule } from 'ng-sirius/input';
 import { SirButtonModule } from 'ng-sirius/button';
 
 @NgModule({
-    declarations: [SirCounterComponent],
+    declarations: [SirStepperComponent],
     imports: [
         CommonModule,
         FormsModule,
@@ -15,7 +15,7 @@ import { SirButtonModule } from 'ng-sirius/button';
         SirButtonModule
     ],
     exports: [
-        SirCounterComponent
+        SirStepperComponent
     ]
 })
-export class SirCounterModule { }
+export class SirStepperModule { }

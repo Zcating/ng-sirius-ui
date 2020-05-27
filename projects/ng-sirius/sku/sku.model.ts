@@ -16,6 +16,8 @@ export interface ISirSkuData {
 
     readonly hiddenStock: boolean;
 
+    readonly picture: string;
+
     readonly quantifier?: string;
 }
 

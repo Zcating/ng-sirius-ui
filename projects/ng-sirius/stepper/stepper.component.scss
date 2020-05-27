@@ -1,6 +1,5 @@
 @import "../core/style/themes/index.scss";
 
-$counter-prefix: sir-counter;
 
 @mixin disabled {
     color: $disabled-color;
@@ -8,18 +7,18 @@ $counter-prefix: sir-counter;
     cursor: not-allowed;
 }
 
-.sir-counter {
+.sir-stepper {
     display: flex;
     
 }
 
-.sir-counter-input {
+.sir-stepper-input {
     margin: 0 2px;
     border-radius: unset;
 }
 
-.sir-counter-plus,
-.sir-counter-minus {
+.sir-stepper-plus,
+.sir-stepper-minus {
     position: relative;
     margin: 0;
     padding: 0;
@@ -28,6 +27,6 @@ $counter-prefix: sir-counter;
     font-size: 20px;
 }
 
-.sir-counter-btn-disabled {
+.sir-stepper-btn-disabled {
     @include disabled();
 }

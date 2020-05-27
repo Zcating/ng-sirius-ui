@@ -4,9 +4,9 @@
   "scripts": {
     "ng": "ng",
     "build:ui": "ng build ng-sirius --prod",
-    "start:demo": "ng serve ng-sirius-demo",
-    "build:demo": "ng build ng-sirius-demo",
-    "test:demo": "ng test ng-sirius-demo",
+    "start:doc": "ng serve ng-sirius-doc",
+    "build:doc": "ng build ng-sirius-doc",
+    "test:doc": "ng test ng-sirius-doc",
     "lint": "ng lint",
     "e2e": "ng e2e"
   },

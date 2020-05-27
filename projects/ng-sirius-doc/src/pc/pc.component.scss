@@ -1,0 +1,96 @@
+@mixin box-shadow {
+    box-shadow: 0 3px 5px -1px rgba(0, 0, 0, .2), 0 6px 10px 0 rgba(0, 0, 0, .14), 0 1px 18px 0 rgba(0, 0, 0, .12);
+}
+
+.doc-header {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 56px;
+    background: #3f51b5;
+
+    @include box-shadow();
+}
+
+.doc-sider {
+    position: fixed;
+    top: 56px;
+    left: 0;
+    bottom: 0;
+    width: 300px;
+
+    @include box-shadow();
+
+
+    &-item {
+        position: relative;
+
+        cursor: pointer;
+    }
+
+    &-item-name {
+        position: relative;
+        padding: 10px 15px;
+        width: 100%;
+
+        font-size: 14px;
+        font-weight: bold;
+    }
+
+    &-sub-item {
+        position: relative;
+        height: 40px;
+        padding: 0 16px;
+
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+
+        transition: all ease-in-out 0.1s;
+
+        cursor: pointer;
+
+        &:hover {
+            background: lightgray;
+        }
+
+        &:active,
+        &:focus {
+            background: #bfbfbf;
+        }
+    }
+
+    &-sub-item-name {
+        position: relative;
+    }
+}
+
+.doc-content {
+    position: fixed;
+    top: 0;
+    left: 300px;
+    right: 0;
+    bottom: 0;
+    margin-top: 56px;
+
+    overflow: hidden scroll;
+
+    &-body {
+        position: relative;
+    }
+}
+
+.doc-mobile {
+
+    position: absolute;
+    right: 30px;
+    top: 30px;
+    width: 360px;
+    height: 640px;
+    @include box-shadow();
+
+    iframe {
+        background: #fff;
+    }
+}

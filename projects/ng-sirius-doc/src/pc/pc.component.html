@@ -1,0 +1,27 @@
+<header class="doc-header"></header>
+<div class="doc-sider">
+    <div *ngFor="let item of items" class="doc-sider-item">
+        <div class="doc-sider-item-name">{{item.name}}</div>
+        <div *ngFor="let sub of item.subs" class="doc-sider-sub-item">
+            <div class="doc-sider-sub-item-name">{{sub.name}}</div>
+        </div>
+    </div>
+</div>
+
+<div class="doc-content">
+    <div class="doc-content-body">
+        <router-outlet></router-outlet>
+    </div>
+
+    <div class="doc-mobile">
+        <div></div>
+        <iframe width="360" height="640" src="/mobile"></iframe>
+    </div>
+
+</div>
+
+<!-- <button sir-button class="app-button" (click)="onClick()" type="primary">测试按钮</button> -->
+<!-- <button (click)="onClick()">测试</button> -->
+<!-- <sir-sku [(visible)]="visible" [sku]="sku"></sir-sku> -->
+
+

@@ -184,7 +184,7 @@
         flex: 1;
     }
 
-    &-counter {
+    &-stepper {
         flex: 2;
     }
 }
@@ -193,17 +193,25 @@
 .sir-sku-action {
     display: flex;
     padding: 8px 16px;
+
+    &-button {
+        @include action-button();
+
+        background: $sku-action-button-bg-main;
+        border-radius: $sku-action-border-radius;
+    }
+
     &-left-button {
         @include action-button();
 
-        background: $sku-action-left-button-background;
+        background: $sku-action-button-bg-normal;
         border-radius: $sku-action-border-radius 0 0 $sku-action-border-radius;
     }
 
     &-right-button {
         @include action-button();
 
-        background: $sku-action-right-button-background;
+        background: $sku-action-button-bg-main;
         border-radius: 0 $sku-action-border-radius $sku-action-border-radius 0;
     }
 }
