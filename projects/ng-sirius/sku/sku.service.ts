@@ -39,6 +39,7 @@ export class SkuService {
     private readonly selectedResult$$ = new BehaviorSubject<ISkuSelectedResult | null>(null);
 
     private bits: number[] = [];
+    private startedBits: number[] = [];
     private graph?: SkuGraph;
 
     public readonly combinations$ = this.combinations$$.asObservable();
@@ -67,7 +68,7 @@ export class SkuService {
 
             this.initSpecsData(data);
             this.combinations$$.next(data.combinations);
-            this.selectedResult$$.next({ price: data.price, stockCount: data.stockCount, picture: '' });
+            this.selectedResult$$.next({ price: data.price, stockCount: data.stockCount, picture: data.picture });
         });
     }
 
@@ -78,39 +79,33 @@ export class SkuService {
         const graph = this.graph;
 
         specInfo.selected = !specInfo.selected;
-        if (specInfo.selected) {
-            this.selectedSpecs$$.next([...this.selectedSpecs$$.value, specInfo]);
-            // R & Sn
-            this.bits = graph.getIntersection(this.bits, specInfo);
-        } else if (specInfo.unselectable) {
-            const selectedSpecs = this.selectedSpecs$$.value.filter(value => value !== specInfo);
-            this.selectedSpecs$$.next(selectedSpecs);
 
-            // Rneg = ~R
-            let bits = graph.inverse(this.bits);
-
-            // Rneg & S1 & S2 & ... & S( St which not in S )
-            if (selectedSpecs.length) {
-                for (const spec of selectedSpecs) {
-                    bits = graph.getIntersection(bits, spec);
-                }
-            } else {
-                bits = graph.queryNodeBits();
+        for (const value of this.specInfos$$.value) {
+            if (specInfo.id !== value.id && specInfo.categoryIndex === value.categoryIndex) {
+                value.selected = false;
             }
-            this.bits = bits;
+        }
+        const prevSpecs = this.selectedSpecs$$.value;
+        let specs;
+        if (specInfo.selected) {
+            // you should filter specification` by the same 'categoryId'
+            specs = [...prevSpecs.filter(value => value.categoryIndex !== specInfo.categoryIndex), specInfo];
+        } else {
+            specs = prevSpecs.filter(value => value !== specInfo);
         }
 
-        const specInfos = [...this.specInfos$$.value];
+        if (specs.length) {
+            this.bits = specs.reduce((prev, current) => graph.getIntersection(prev, current), this.startedBits);
+        } else {
+            this.bits = graph.queryNodeBits();
+        }
+
         for (let i = 0; i < this.bits.length; i++) {
-            specInfos[i].unselectable = !this.bits[i];
+            this.specInfos$$.value[i].unselectable = !this.bits[i];
         }
 
+        this.selectedSpecs$$.next(specs);
         this.selectedResult$$.next(this.getResult());
-    }
-
-
-    selectProperty(property: ISirSkuProperty) {
-
     }
 
     private initSpecsData(data: ISirSkuData) {
@@ -130,7 +125,7 @@ export class SkuService {
         this.categories$$.next(newCategories);
         this.specInfos$$.next(specInfos);
         this.graph = SkuGraph.create(specInfos, data.combinations);
-        this.bits = this.graph.queryNodeBits();
+        this.startedBits = this.graph.queryNodeBits();
     }
 
 

@@ -1,5 +1,6 @@
 import { SirAny } from 'ng-sirius/core/types/any';
 import { ISirSkuSpec, ISirSkuCombination } from './sku.model';
+import { ISkuSpecInfo } from './sku.service';
 
 export class Node<T = SirAny> {
 
@@ -11,13 +12,22 @@ export class Node<T = SirAny> {
 
 export class SkuGraph {
 
-    static create(specInfos: ISirSkuSpec[], combinations: ISirSkuCombination[]) {
-        const nodes: Node<ISirSkuSpec>[] = specInfos.map(value => new Node(value));
+    static create(specInfos: ISkuSpecInfo[], combinations: ISirSkuCombination[]) {
+        const nodes: Node<ISkuSpecInfo>[] = specInfos.map(value => new Node(value));
 
         for (const node of nodes) {
             node.edges = new Array(nodes.length).fill(0);
         }
 
+        for (let i = 0; i < specInfos.length; i++) {
+            for (let j = i + 1; j < specInfos.length; j++) {
+                
+                if (specInfos[i].categoryIndex === specInfos[j].categoryIndex) {
+                    nodes[i].edges[j] = 1;
+                    nodes[j].edges[i] = 1;
+                }
+            }
+        }
 
         for (const comb of combinations) {
             for (const id1 of comb.specIds) {
@@ -25,6 +35,7 @@ export class SkuGraph {
                     if (id1 === id2) {
                         continue;
                     }
+
                     const x = nodes.findIndex((theNode) => {
                         return theNode.value.id === id1;
                     });
@@ -34,6 +45,7 @@ export class SkuGraph {
                     if (x === -1 || y === -1 || x === y) {
                         continue;
                     }
+
                     nodes[x].edges[y] = 1;
                 }
             }
