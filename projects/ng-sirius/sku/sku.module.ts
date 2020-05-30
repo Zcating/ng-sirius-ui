@@ -7,6 +7,7 @@ import { SirSkuRowComponent } from './components/sku-row.component';
 import { SirDrawerModule } from 'ng-sirius/drawer/drawer.module';
 import { SirStepperModule } from 'ng-sirius/stepper';
 import { SkuService } from './sku.service';
+import { FormsModule } from '@angular/forms';
 
 
 
@@ -20,6 +21,7 @@ import { SkuService } from './sku.service';
     OverlayModule,
     SirDrawerModule,
     SirStepperModule,
+    FormsModule
   ],
   providers: [
     SkuService

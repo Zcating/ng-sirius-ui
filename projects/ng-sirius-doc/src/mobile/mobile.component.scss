@@ -9,3 +9,13 @@
     align-items: center;
     justify-content: center;
 }
+
+.content {
+    position: absolute;
+    top: 100px;
+    left: 0;
+    right: 0;
+    height: 100px;
+    padding: 10px;
+    word-wrap: break-word;
+}

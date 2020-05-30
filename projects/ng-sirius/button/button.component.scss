@@ -17,10 +17,15 @@ $button-focus-transition: opacity 200ms $swift-ease-in-out-timing-function,
 
     &:hover {
         .sir-button-focus-overlay {
-            opacity: 0.04;
+            opacity: 0.05;
         }
     }
 
+    &:active {
+        .sir-button-focus-overlay {
+            opacity: 0.15;
+        }
+    }
     
     &[disabled],
     &:disabled {

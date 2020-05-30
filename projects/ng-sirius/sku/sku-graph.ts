@@ -21,7 +21,6 @@ export class SkuGraph {
 
         for (let i = 0; i < specInfos.length; i++) {
             for (let j = i + 1; j < specInfos.length; j++) {
-                
                 if (specInfos[i].categoryIndex === specInfos[j].categoryIndex) {
                     nodes[i].edges[j] = 1;
                     nodes[j].edges[i] = 1;

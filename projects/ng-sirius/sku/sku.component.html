@@ -36,7 +36,9 @@
             </div>
             <div class="sir-sku-stock">
                 <div class="sir-sku-stock-title">{{stepperTitle}}</div>
-                <div class="sir-sku-stock-stepper"><sir-stepper></sir-stepper></div>
+                <div class="sir-sku-stock-stepper">
+                    <sir-stepper [(ngModel)]="selectedCount" [sirMin]="0" [sirMax]=""></sir-stepper>
+                </div>
             </div>
         </section>
         <footer class="sir-sku-action">
@@ -44,10 +46,9 @@
                 <button sir-button class="sir-sku-action-button">{{actionMainText}}</button>
             </ng-container>
             <ng-template #multiActionTemplate>
-                <button sir-button class="sir-sku-action-left-button">{{actionNormalText}}</button>
-                <button sir-button class="sir-sku-action-right-button">{{actionMainText}}</button>    
+                <button sir-button class="sir-sku-action-left-button" (click)="normalActionClick()">{{actionNormalText}}</button>
+                <button sir-button class="sir-sku-action-right-button" (click)="mainActionClick()">{{actionMainText}}</button>    
             </ng-template>
         </footer>
     </div>
-
 </sir-drawer>

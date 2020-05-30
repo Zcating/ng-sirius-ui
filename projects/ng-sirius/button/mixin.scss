@@ -45,7 +45,6 @@ $button-focus-transition: opacity 200ms $swift-ease-in-out-timing-function,
 
     &:hover {
         text-decoration: none;
-        // @include button-color($text-color, #2962ff, #2962ff);
     }
 
     &:active {

@@ -11,20 +11,17 @@ export interface ISkuSpecInfo extends ISirSkuSpec {
     unselectable?: boolean;
 }
 
-export interface ISkuPropertyInfo extends ISirSkuProperty {
-    readonly categoryIndex: number;
-    selected?: boolean;
-    unselectable?: boolean;
-}
-
 export interface ISkuCategoryInfo extends ISirSkuSpecCategory {
     readonly specs: ISkuSpecInfo[];
+    selected?: boolean;
 }
 
 export interface ISkuSelectedResult {
     readonly stockCount: number;
     readonly price: string;
     readonly picture: string;
+    readonly id?: string;
+    readonly specIds?: string[];
 }
 
 @Injectable()
@@ -38,7 +35,6 @@ export class SkuService {
     private readonly finishSelected$$ = new BehaviorSubject(false);
     private readonly selectedResult$$ = new BehaviorSubject<ISkuSelectedResult | null>(null);
 
-    private bits: number[] = [];
     private startedBits: number[] = [];
     private graph?: SkuGraph;
 
@@ -68,6 +64,7 @@ export class SkuService {
 
             this.initSpecsData(data);
             this.combinations$$.next(data.combinations);
+            this.selectedSpecs$$.next([]);
             this.selectedResult$$.next({ price: data.price, stockCount: data.stockCount, picture: data.picture });
         });
     }
@@ -77,35 +74,39 @@ export class SkuService {
             return;
         }
         const graph = this.graph;
+        const categories = this.categories$$.value;
+        const prevSpecs = this.selectedSpecs$$.value;
 
         specInfo.selected = !specInfo.selected;
+        categories[specInfo.categoryIndex].selected = specInfo.selected;
 
         for (const value of this.specInfos$$.value) {
             if (specInfo.id !== value.id && specInfo.categoryIndex === value.categoryIndex) {
                 value.selected = false;
             }
         }
-        const prevSpecs = this.selectedSpecs$$.value;
-        let specs;
+        
+        let selectedSpecInfos;
         if (specInfo.selected) {
             // you should filter specification` by the same 'categoryId'
-            specs = [...prevSpecs.filter(value => value.categoryIndex !== specInfo.categoryIndex), specInfo];
+            selectedSpecInfos = [...prevSpecs.filter(value => value.categoryIndex !== specInfo.categoryIndex), specInfo];
         } else {
-            specs = prevSpecs.filter(value => value !== specInfo);
+            selectedSpecInfos = prevSpecs.filter(value => value !== specInfo);
         }
 
-        if (specs.length) {
-            this.bits = specs.reduce((prev, current) => graph.getIntersection(prev, current), this.startedBits);
+        let bits;
+        if (selectedSpecInfos.length) {
+            bits = selectedSpecInfos.reduce((prev, current) => graph.getIntersection(prev, current), this.startedBits);
         } else {
-            this.bits = graph.queryNodeBits();
+            bits = graph.queryNodeBits();
         }
 
-        for (let i = 0; i < this.bits.length; i++) {
-            this.specInfos$$.value[i].unselectable = !this.bits[i];
+        for (let i = 0; i < bits.length; i++) {
+            this.specInfos$$.value[i].unselectable = !bits[i];
         }
 
-        this.selectedSpecs$$.next(specs);
-        this.selectedResult$$.next(this.getResult());
+        this.selectedSpecs$$.next(selectedSpecInfos);
+        this.selectedResult$$.next(this.getResult(specInfo, selectedSpecInfos));
     }
 
     private initSpecsData(data: ISirSkuData) {
@@ -129,34 +130,39 @@ export class SkuService {
     }
 
 
-    private getResult(): ISkuSelectedResult {
+    private getResult(currentSelectedSpec: ISkuSpecInfo, selectedSpecs: ISkuSpecInfo[]): ISkuSelectedResult {
         const data = this.skuData$$.value;
-        const infos = this.specInfos$$.value;
         const combinations = data?.combinations;
-        const selectedSpecs = this.selectedSpecs$$.value;
         if (!data || !combinations) {
             return { stockCount: 0, price: '0', picture: '' };
         }
 
-        if (selectedSpecs.length === combinations.length) {
+        const foundedSpec = selectedSpecs.find(value => !!value.imgUrl);
+        const picture = foundedSpec?.imgUrl || data.picture;
+
+        if (selectedSpecs.length === data.specCategories.length) {
             let result;
             for (const combination of combinations) {
                 let tag = true;
-                let picture = data.picture;
-                for (const info of infos) {
-                    tag = combination.specIds.some(id => info.id === id) && tag;
-                    if (info.imgUrl) {
-                        picture = info.imgUrl;
-                    }
+                for (const id of combination.specIds) {
+                    tag = selectedSpecs.some(info => info.id === id) && tag;
                 }
+
                 if (tag) {
-                    result = { stockCount: combination.stockCount, price: combination.price, picture };
+                    result = {
+                        stockCount: combination.stockCount,
+                        price: combination.price,
+                        id: combination.id,
+                        picture,
+                        specIds: [...combination.specIds]
+                    };
+                    break;
                 }
             }
-            return result || { stockCount: data.stockCount, price: data.price, picture: data.picture };
+            return result || { stockCount: data.stockCount, price: data.price, picture };
+        } else {
+            return { stockCount: data.stockCount, price: data.price, picture};
         }
-
-        return { stockCount: data.stockCount, price: data.price, picture: data.picture };
     }
 }
 

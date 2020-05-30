@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ISirSkuData } from 'ng-sirius';
+import { ISirSkuReturnData } from 'ng-sirius/sku';
 
 @Component({
     selector: 'sir-mobile',
@@ -16,13 +17,13 @@ export class MobileComponent implements OnInit {
             specs: [{
                 id: '1001',
                 name: 'red',
-                imgUrl: 'https://img.yzcdn.cn/upload_files/2017/02/21/FjKTOxjVgnUuPmHJRdunvYky9OHP.jpg!100x100.jpg',
-                previewImgUrl: 'https://img.yzcdn.cn/upload_files/2017/02/21/FjKTOxjVgnUuPmHJRdunvYky9OHP.jpg!100x100.jpg'
+                imgUrl: '/assets/sku-test1.jpg',
+                previewImgUrl: '/assets/sku-test1.jpg'
             }, {
                 id: '1002',
                 name: 'blue',
-                imgUrl: 'https://img.yzcdn.cn/upload_files/2017/02/21/FjKTOxjVgnUuPmHJRdunvYky9OHP.jpg!100x100.jpg',
-                previewImgUrl: 'https://img.yzcdn.cn/upload_files/2017/02/21/FjKTOxjVgnUuPmHJRdunvYky9OHP.jpg!100x100.jpg'
+                imgUrl: '/assets/sku-test2.jpg',
+                previewImgUrl: '/assets/sku-test2.jpg'
             }],
         }, {
             name: 'size',
@@ -68,17 +69,17 @@ export class MobileComponent implements OnInit {
             id: '4',
             price: '1004',
             stockCount: 40,
-            specIds: ['1002', '2001', '3002']
-        }, {
-            id: '5',
-            price: '1005',
-            stockCount: 50,
-            specIds: ['1002', '2002', '3003']
-        }, {
-            id: '6',
-            price: '1006',
-            stockCount: 60,
-            specIds: ['1002', '2003', '3003']
+            specIds: ['1002', '2001', '3001']
+        // }, {
+            // id: '5',
+            // price: '1005',
+            // stockCount: 50,
+            // specIds: ['1002', '2002', '3003']
+        // }, {
+            // id: '6',
+            // price: '1006',
+            // stockCount: 60,
+            // specIds: ['1002', '2003', '3003']
         }],
 
         price: '100',
@@ -91,13 +92,19 @@ export class MobileComponent implements OnInit {
 
         hiddenStock: false,
 
-        picture: 'https://img.yzcdn.cn/upload_files/2017/02/21/FjKTOxjVgnUuPmHJRdunvYky9OHP.jpg!100x100.jpg'
+        picture: '/assets/sku-test1.jpg'
     };
 
+    data: string = '';
 
     constructor() { }
 
     ngOnInit(): void {
     }
 
+
+    onMainAction(data: ISirSkuReturnData) {
+        this.data = JSON.stringify(data);
+        this.visible = false;
+    }
 }

@@ -32,7 +32,7 @@ export class SirSkuComponent implements OnInit, OnDestroy, OnChanges {
 
     // @Input() goods?: ISirSkuGoods;
 
-    @Input() goodsId: number | string = 0;
+    @Input() goodsId: string = '';
 
     @Input() priceTag: string = '￥';
 
@@ -84,8 +84,9 @@ export class SirSkuComponent implements OnInit, OnDestroy, OnChanges {
 
     @Output() visibleChange = new EventEmitter<boolean>();
 
-    @Output() getSkuData = new EventEmitter<ISirSkuReturnData>();
+    @Output() sirOnMainAction = new EventEmitter<ISirSkuReturnData>();
 
+    @Output() sirOnNormalAction = new EventEmitter<ISirSkuReturnData>();
 
     bodyStyle = {
         maxHeight: '80vh',
@@ -95,8 +96,8 @@ export class SirSkuComponent implements OnInit, OnDestroy, OnChanges {
 
     currentPropertyIndex: number = 0;
     currentPrice: number = 0;
+    selectedCount: number = 0;
     selectedResult: ISkuSelectedResult | null = null;
-    skuReturnData?: ISirSkuReturnData;
 
     get specCtegories$() {
         return this.skuService.categories$;
@@ -108,6 +109,10 @@ export class SirSkuComponent implements OnInit, OnDestroy, OnChanges {
 
     get selectionText$() {
         return new BehaviorSubject('');
+    }
+
+    get MaxSelectedCount() {
+        return this.selectedResult?.stockCount || 10;
     }
 
     private destroy$ = new Subject<void>();
@@ -140,6 +145,7 @@ export class SirSkuComponent implements OnInit, OnDestroy, OnChanges {
             takeUntil(this.destroy$)
         ).subscribe((value) => {
             this.selectedResult = value;
+            // console.log(value);
         });
     }
 
@@ -152,5 +158,31 @@ export class SirSkuComponent implements OnInit, OnDestroy, OnChanges {
         if (type === 'spec') {
             this.skuService.selectSpec(item as ISkuSpecInfo);
         }
+    }
+
+    normalActionClick() {
+        this.sirOnNormalAction.emit({
+            goodsId: this.goodsId,
+            selectedCount: this.selectedCount,
+            selectedSkuComb: {
+                id: this.selectedResult?.id || '',
+                stockCount: this.selectedResult?.stockCount || 0,
+                price: this.selectedResult?.price || '',
+                specIds: this.selectedResult?.specIds
+            }
+        });
+    }
+
+    mainActionClick() {
+        this.sirOnMainAction.emit({
+            goodsId: this.goodsId,
+            selectedCount: this.selectedCount,
+            selectedSkuComb: {
+                id: this.selectedResult?.id || '',
+                stockCount: this.selectedResult?.stockCount || 0,
+                price: this.selectedResult?.price || '',
+                specIds: this.selectedResult?.specIds
+            }
+        });
     }
 }

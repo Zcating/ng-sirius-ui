@@ -21,6 +21,10 @@
 
     color: #ffffff;
     font-size: 14px;
+
+    &:focus {
+        outline: 0;
+    }
 }
 
 

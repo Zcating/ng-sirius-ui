@@ -24,7 +24,6 @@ export interface ISirSkuData {
 export interface ISirSkuSpecCategory {
     readonly name: string;
     readonly specs: ISirSkuSpec[];
-    selected?: boolean;
 }
 
 export interface ISirSkuSpec {
@@ -145,10 +144,9 @@ export interface ISirSkuReturnData {
 
     // 选择的 sku 组合
     selectedSkuComb: {
-        id: number,
-        price: number,
+        id: string,
+        price: string,
         stockCount: number,
-        categories: ISirSkuPropertyCategory[],
-        propertyPrice: number
+        specIds?: string[]
     };
 }
