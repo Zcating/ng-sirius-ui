@@ -141,6 +141,7 @@ export class SirSkuComponent implements OnInit, OnDestroy, OnChanges {
             return;
         }
         this.skuService.skuData = this.sku;
+        
         this.skuService.selectedResult$.pipe(
             takeUntil(this.destroy$)
         ).subscribe((value) => {

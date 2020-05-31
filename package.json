@@ -5,7 +5,7 @@
     "ng": "ng",
     "build:ui": "ng build ng-sirius --prod",
     "start:doc": "ng serve ng-sirius-doc",
-    "build:doc": "ng build ng-sirius-doc",
+    "build:doc": "ng build ng-sirius-doc --prod --baseHref=/ng-sirius-ui/; cp ./docs/index.html ./docs/404.html",
     "test:doc": "ng test ng-sirius-doc",
     "lint": "ng lint",
     "e2e": "ng e2e"

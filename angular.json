@@ -62,7 +62,7 @@
         "build": {
           "builder": "@angular-devkit/build-angular:browser",
           "options": {
-            "outputPath": "dist/ng-sirius-doc",
+            "outputPath": "docs",
             "index": "projects/ng-sirius-doc/src/index.html",
             "main": "projects/ng-sirius-doc/src/main.ts",
             "polyfills": "projects/ng-sirius-doc/src/polyfills.ts",
@@ -82,8 +82,8 @@
             "production": {
               "fileReplacements": [
                 {
-                  "replace": "ng-sirius-doc/src/environments/environment.ts",
-                  "with": "ng-sirius-doc/src/environments/environment.prod.ts"
+                  "replace": "projects/ng-sirius-doc/src/environments/environment.ts",
+                  "with": "projects/ng-sirius-doc/src/environments/environment.prod.ts"
                 }
               ],
               "optimization": true,
