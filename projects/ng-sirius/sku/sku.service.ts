@@ -96,7 +96,7 @@ export class SkuService {
 
         let bits;
         if (selectedSpecInfos.length) {
-            bits = selectedSpecInfos.reduce((prev, current) => graph.getIntersection(prev, current), this.startedBits);
+            bits = graph.getIntersection(selectedSpecInfos);
         } else {
             bits = graph.queryNodeBits();
         }
@@ -106,7 +106,7 @@ export class SkuService {
         }
 
         this.selectedSpecs$$.next(selectedSpecInfos);
-        this.selectedResult$$.next(this.getResult(specInfo, selectedSpecInfos));
+        this.selectedResult$$.next(this.getResult(selectedSpecInfos));
     }
 
     private initSpecsData(data: ISirSkuData) {
@@ -130,7 +130,7 @@ export class SkuService {
     }
 
 
-    private getResult(currentSelectedSpec: ISkuSpecInfo, selectedSpecs: ISkuSpecInfo[]): ISkuSelectedResult {
+    private getResult(selectedSpecs: ISkuSpecInfo[]): ISkuSelectedResult {
         const data = this.skuData$$.value;
         const combinations = data?.combinations;
         if (!data || !combinations) {

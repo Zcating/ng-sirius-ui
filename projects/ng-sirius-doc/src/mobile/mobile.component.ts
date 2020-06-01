@@ -16,38 +16,38 @@ export class MobileComponent implements OnInit {
             name: 'color',
             specs: [{
                 id: '1001',
-                name: 'red',
+                name: '黑色',
                 imgUrl: `${this.prefixRoute}/assets/sku-test1.jpg`,
                 previewImgUrl: `${this.prefixRoute}/assets/sku-test1.jpg`
             }, {
                 id: '1002',
-                name: 'blue',
+                name: '白色',
                 imgUrl: `${this.prefixRoute}/assets/sku-test2.jpg`,
                 previewImgUrl: `${this.prefixRoute}/assets/sku-test2.jpg`
             }],
         }, {
-            name: 'size',
+            name: '套餐',
             specs: [{
                 id: '2001',
-                name: 'super-large'
+                name: '套餐1'
             }, {
                 id: '2002',
-                name: 'large'
+                name: '套餐2'
             }, {
                 id: '2003',
-                name: 'mid'
+                name: '套餐3'
             }],
         }, {
-            name: 'ice',
+            name: '内存',
             specs: [{
                 id: '3001',
-                name: 'more',
+                name: '64G',
             }, {
                 id: '3002',
-                name: 'default',
+                name: '128G',
             }, {
                 id: '3003',
-                name: 'less',
+                name: '256G',
             }]
         }],
         combinations: [{
@@ -75,11 +75,11 @@ export class MobileComponent implements OnInit {
             price: '1005',
             stockCount: 50,
             specIds: ['1002', '2002', '3003']
-        }, {
-            id: '6',
-            price: '1006',
-            stockCount: 60,
-            specIds: ['1002', '2003', '3003']
+        // }, {
+        //     id: '6',
+        //     price: '1006',
+        //     stockCount: 60,
+        //     specIds: ['1002', '2003', '3003']
         }],
 
         price: '100',

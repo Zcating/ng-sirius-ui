@@ -53,14 +53,28 @@ export class SkuGraph {
         return new SkuGraph(nodes);
     }
 
-
     get nodeCount() {
         return this.nodes.length;
     }
 
+    private readonly initNodeBits: number[];
+    private readonly staredNodeBits: number[];
+
     private constructor(
-        private readonly nodes: Node<ISirSkuSpec>[]
-    ) { }
+        private readonly nodes: Node<ISirSkuSpec>[],
+    ) {
+        this.initNodeBits = this.nodes.map(
+            value => value.edges.reduce(
+                (prev, curr) => prev + curr > 0 ? 1 : 0, 0
+            )
+        );
+        this.staredNodeBits = new Array(this.nodeCount).fill(0);
+
+        for (const node of nodes) {
+            console.log(node.edges);
+        }
+    }
+
 
     queryAllNodeValues(): (ISirSkuSpec | null)[] {
         return this.nodes.map(node => node.value);
@@ -68,39 +82,24 @@ export class SkuGraph {
 
     queryNodeBits(target?: ISirSkuSpec): number[] {
         if (!target) {
-            return new Array(this.nodeCount).fill(1);
+            return this.initNodeBits;
         }
         const index = this.nodes.findIndex((node) => node.value.id === target.id);
         return this.nodes[index]?.edges;
     }
 
-    getUnion(bits: number[], target: ISirSkuSpec, process?: (value: number[]) => number[]) {
-        let value = this.queryNodeBits(target);
-        if (process) {
-            value = process(value);
-        }
-        return this.union(bits, value);
-    }
 
-    getIntersection(bits: number[], target: ISirSkuSpec, process?: (value: number[]) => number[]) {
-        let value = this.queryNodeBits(target);
-        if (process) {
-            value = process(value);
-        }
-        return this.intersection(bits, value);
+    getIntersection(targets: ISirSkuSpec[]) {
+        const result = targets.reduce((prev, current) => {
+            return this.intersection(prev, this.queryNodeBits(current));
+        }, this.staredNodeBits);
+        console.log(result);
+        return result.map(value => Number(value >= targets.length));
     }
 
 
-    inverse(arr: number[]): number[] {
-        return arr.map(value => !value ? 1 : 0);
-    }
-
-    intersection(arr1: number[], arr2: number[]) {
-        return arr1.map((value, index) => value === arr2[index] ? value : 0);
-    }
-
-    union(arr1: number[], arr2: number[]) {
-        return arr1.map((value, index) => value || arr2[index] || 0);
+    private intersection(arr1: number[], arr2: number[]) {
+        return arr1.map((value, index) => value + arr2[index]);
     }
 }
 
